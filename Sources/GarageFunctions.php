@@ -1085,7 +1085,6 @@ function getimagesize_remote($image_url)
 
     // Getting binary data
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
 
     $image = curl_exec($ch);
     curl_close($ch);
@@ -2248,7 +2247,7 @@ function smfg_footer()
 }
 
 // Returns embedded $type = flash player (1), thumbnail (2), video ID (3), validate video URL (4)
-function displayVideo($url, $type)
+function displayVideo_OLD($url, $type)
 {
     global $settings, $context;
 

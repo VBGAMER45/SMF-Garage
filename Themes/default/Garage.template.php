@@ -2309,7 +2309,7 @@ function template_add_vehicle()
         <table width="100%" border="0" cellspacing="1" cellpadding="4" align="center">
         <tr>
             <td width="32%" align="right" nowrap="nowrap"><b>' . $txt['smfg_attach_image'] . '.<br />' . $txt['smfg_max_filesize'] . ': ' . $smfgSettings['max_image_kbytes'] . ' ' . $txt['smfg_kbytes'] . '<br />' . $txt['smfg_max_resolution'] . ': ' . $smfgSettings['max_image_resolution'] . 'x' . $smfgSettings['max_image_resolution'] . '</b></td>
-            <td><input type="hidden" name="MAX_FILE_SIZE" value="' . $context['max_image_bytes'] . '" /><input type="file" size="30" name="FILE_UPLOAD"/></td>
+            <td><input type="hidden" name="MAX_FILE_SIZE" value="' . $context['max_image_bytes'] . '" /><input type="file" size="30" name="FILE_UPLOAD" accept="image/jpeg,image/png,image/gif,image/webp,image/bmp,.jpg,.jpeg,.png,.gif,.webp,.bmp"/></td>
         </tr>';
 
         // Show the input for remote images if it is enabled
@@ -2725,7 +2725,7 @@ function template_edit_vehicle()
                     <table border="0" cellpadding="3" cellspacing="1" width="100%">  
                         <tr>
                             <td width="32%" align="right" nowrap="nowrap"><b>' . $txt['smfg_attach_image'] . '.<br />' . $txt['smfg_max_filesize'] . ': ' . $smfgSettings['max_image_kbytes'] . ' ' . $txt['smfg_kbytes'] . '<br />' . $txt['smfg_max_resolution'] . ': ' . $smfgSettings['max_image_resolution'] . 'x' . $smfgSettings['max_image_resolution'] . '</b></td>
-                            <td><input type="hidden" name="MAX_FILE_SIZE" value="' . $context['max_image_bytes'] . '" /><input type="file" size="30" name="FILE_UPLOAD"/></td>
+                            <td><input type="hidden" name="MAX_FILE_SIZE" value="' . $context['max_image_bytes'] . '" /><input type="file" size="30" name="FILE_UPLOAD" accept="image/jpeg,image/png,image/gif,image/webp,image/bmp,.jpg,.jpeg,.png,.gif,.webp,.bmp"/></td>
                         </tr>';
 
         // Show the input for remote images if it is enabled
@@ -3231,7 +3231,7 @@ function template_add_modification()
         </tr>
         <tr>
             <td width="32%" align="right" nowrap="nowrap"><b>' . $txt['smfg_attach_image'] . '<br />' . $txt['smfg_max_filesize'] . ': ' . $smfgSettings['max_image_kbytes'] . ' ' . $txt['smfg_kbytes'] . '<br />' . $txt['smfg_max_resolution'] . ': ' . $smfgSettings['max_image_resolution'] . 'x' . $smfgSettings['max_image_resolution'] . '</b></td>
-            <td><input type="hidden" name="MAX_FILE_SIZE" value="' . $context['max_image_bytes'] . '" /><input type="file" size="30" name="FILE_UPLOAD"/></td>
+            <td><input type="hidden" name="MAX_FILE_SIZE" value="' . $context['max_image_bytes'] . '" /><input type="file" size="30" name="FILE_UPLOAD" accept="image/jpeg,image/png,image/gif,image/webp,image/bmp,.jpg,.jpeg,.png,.gif,.webp,.bmp"/></td>
         </tr>';
 
         // Show the input for remote images if it is enabled
@@ -3699,7 +3699,7 @@ function template_edit_modification()
                 <table border="0" cellpadding="3" cellspacing="1" width="100%">           
                     <tr>
                         <td width="32%" align="right" nowrap="nowrap"><b>' . $txt['smfg_attach_image'] . '.<br />' . $txt['smfg_max_filesize'] . ': ' . $smfgSettings['max_image_kbytes'] . ' ' . $txt['smfg_kbytes'] . '<br />' . $txt['smfg_max_resolution'] . ': ' . $smfgSettings['max_image_resolution'] . 'x' . $smfgSettings['max_image_resolution'] . '</b></td>
-                        <td><input type="hidden" name="MAX_FILE_SIZE" value="' . $context['max_image_bytes'] . '" /><input type="file" size="30" name="FILE_UPLOAD"/></td>
+                        <td><input type="hidden" name="MAX_FILE_SIZE" value="' . $context['max_image_bytes'] . '" /><input type="file" size="30" name="FILE_UPLOAD" accept="image/jpeg,image/png,image/gif,image/webp,image/bmp,.jpg,.jpeg,.png,.gif,.webp,.bmp"/></td>
                     </tr>';
 
         // Show the input for remote images if it is enabled
@@ -4609,7 +4609,7 @@ function template_add_quartermile()
                     </tr>                    
                     <tr>
                         <td width="32%" align="right" nowrap="nowrap"><b>' . $txt['smfg_attach_image'] . '.<br />' . $txt['smfg_max_filesize'] . ': ' . $smfgSettings['max_image_kbytes'] . ' ' . $txt['smfg_kbytes'] . '<br />' . $txt['smfg_max_resolution'] . ': ' . $smfgSettings['max_image_resolution'] . 'x' . $smfgSettings['max_image_resolution'] . '</b></td>
-                        <td><input type="hidden" name="MAX_FILE_SIZE" value="' . $context['max_image_bytes'] . '" /><input type="file" size="30" name="FILE_UPLOAD"/></td>
+                        <td><input type="hidden" name="MAX_FILE_SIZE" value="' . $context['max_image_bytes'] . '" /><input type="file" size="30" name="FILE_UPLOAD" accept="image/jpeg,image/png,image/gif,image/webp,image/bmp,.jpg,.jpeg,.png,.gif,.webp,.bmp"/></td>
                     </tr>';
 
         // Show the input for remote images if it is enabled
@@ -4902,7 +4902,7 @@ function template_edit_quartermile()
         <table border="0" cellpadding="3" cellspacing="1" width="100%">           
             <tr>
                 <td width="32%" align="right" nowrap="nowrap"><b>' . $txt['smfg_attach_image'] . '.<br />' . $txt['smfg_max_filesize'] . ': ' . $smfgSettings['max_image_kbytes'] . ' ' . $txt['smfg_kbytes'] . '<br />' . $txt['smfg_max_resolution'] . ': ' . $smfgSettings['max_image_resolution'] . 'x' . $smfgSettings['max_image_resolution'] . '</b></td>
-                <td><input type="hidden" name="MAX_FILE_SIZE" value="' . $context['max_image_bytes'] . '" /><input type="file" size="30" name="FILE_UPLOAD"/></td>
+                <td><input type="hidden" name="MAX_FILE_SIZE" value="' . $context['max_image_bytes'] . '" /><input type="file" size="30" name="FILE_UPLOAD" accept="image/jpeg,image/png,image/gif,image/webp,image/bmp,.jpg,.jpeg,.png,.gif,.webp,.bmp"/></td>
             </tr>';
 
         // Show the input for remote images if it is enabled
@@ -5602,7 +5602,7 @@ function template_add_dynorun()
                     </tr>
                     <tr>
                         <td width="32%" align="right" nowrap="nowrap"><b>' . $txt['smfg_attach_image'] . '.<br />' . $txt['smfg_max_filesize'] . ': ' . $smfgSettings['max_image_kbytes'] . ' ' . $txt['smfg_kbytes'] . '<br />' . $txt['smfg_max_resolution'] . ': ' . $smfgSettings['max_image_resolution'] . 'x' . $smfgSettings['max_image_resolution'] . '</b></td>
-                        <td><input type="hidden" name="MAX_FILE_SIZE" value="' . $context['max_image_bytes'] . '" /><input type="file" size="30" name="FILE_UPLOAD"/></td>
+                        <td><input type="hidden" name="MAX_FILE_SIZE" value="' . $context['max_image_bytes'] . '" /><input type="file" size="30" name="FILE_UPLOAD" accept="image/jpeg,image/png,image/gif,image/webp,image/bmp,.jpg,.jpeg,.png,.gif,.webp,.bmp"/></td>
                     </tr>';
 
         // Show the input for remote images if it is enabled
@@ -5948,7 +5948,7 @@ function template_edit_dynorun()
                 <table border="0" cellpadding="3" cellspacing="1" width="100%">           
                     <tr>
                         <td width="32%" align="right" nowrap="nowrap"><b>' . $txt['smfg_attach_image'] . '.<br />' . $txt['smfg_max_filesize'] . ': ' . $smfgSettings['max_image_kbytes'] . ' ' . $txt['smfg_kbytes'] . '<br />' . $txt['smfg_max_resolution'] . ': ' . $smfgSettings['max_image_resolution'] . 'x' . $smfgSettings['max_image_resolution'] . '</b></td>
-                        <td><input type="hidden" name="MAX_FILE_SIZE" value="' . $context['max_image_bytes'] . '" /><input type="file" size="30" name="FILE_UPLOAD"/></td>
+                        <td><input type="hidden" name="MAX_FILE_SIZE" value="' . $context['max_image_bytes'] . '" /><input type="file" size="30" name="FILE_UPLOAD" accept="image/jpeg,image/png,image/gif,image/webp,image/bmp,.jpg,.jpeg,.png,.gif,.webp,.bmp"/></td>
                     </tr>';
 
         // Show the input for remote images if it is enabled
@@ -6615,7 +6615,7 @@ function template_add_laptime()
                     </tr>
                     <tr>
                         <td width="32%" align="right" nowrap="nowrap"><b>' . $txt['smfg_attach_image'] . '.<br />' . $txt['smfg_max_filesize'] . ': ' . $smfgSettings['max_image_kbytes'] . ' ' . $txt['smfg_kbytes'] . '<br />' . $txt['smfg_max_resolution'] . ': ' . $smfgSettings['max_image_resolution'] . 'x' . $smfgSettings['max_image_resolution'] . '</b></td>
-                        <td><input type="hidden" name="MAX_FILE_SIZE" value="' . $context['max_image_bytes'] . '" /><input type="file" size="30" name="FILE_UPLOAD"/></td>
+                        <td><input type="hidden" name="MAX_FILE_SIZE" value="' . $context['max_image_bytes'] . '" /><input type="file" size="30" name="FILE_UPLOAD" accept="image/jpeg,image/png,image/gif,image/webp,image/bmp,.jpg,.jpeg,.png,.gif,.webp,.bmp"/></td>
                     </tr>';
 
         // Show the input for remote images if it is enabled
@@ -6939,7 +6939,7 @@ function template_edit_laptime()
                 <table border="0" cellpadding="3" cellspacing="1" width="100%">           
                     <tr>
                         <td width="32%" align="right" nowrap="nowrap"><b>' . $txt['smfg_attach_image'] . '.<br />' . $txt['smfg_max_filesize'] . ': ' . $smfgSettings['max_image_kbytes'] . ' ' . $txt['smfg_kbytes'] . '<br />' . $txt['smfg_max_resolution'] . ': ' . $smfgSettings['max_image_resolution'] . 'x' . $smfgSettings['max_image_resolution'] . '</b></td>
-                        <td><input type="hidden" name="MAX_FILE_SIZE" value="' . $context['max_image_bytes'] . '" /><input type="file" size="30" name="FILE_UPLOAD"/></td>
+                        <td><input type="hidden" name="MAX_FILE_SIZE" value="' . $context['max_image_bytes'] . '" /><input type="file" size="30" name="FILE_UPLOAD" accept="image/jpeg,image/png,image/gif,image/webp,image/bmp,.jpg,.jpeg,.png,.gif,.webp,.bmp"/></td>
                     </tr>';
 
         // Show the input for remote images if it is enabled
