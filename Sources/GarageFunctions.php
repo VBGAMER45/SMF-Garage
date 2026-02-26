@@ -4,9 +4,10 @@
  ***********************************************************************************
  * SMF Garage: Simple Machines Forum Garage (MOD)                                  *
  * =============================================================================== *
- * Software Version:           SMF Garage 2.3                                      *
- * Install for:                2.0.9-2.0.99                                        *
+ * Software Version:           SMF Garage 3.0.0                                    *
+ * Install for:                2.0.9-2.0.99, 2.1.0-2.1.99                         *
  * Original Developer:         RRasco (http://www.smfgarage.com)                   *
+ * Copyright 2026 by:          vbgamer45 (https://www.smfhacks.com)               *
  * Copyright 2015 by:          Bruno Alves (margarett.pt@gmail.com                 *
  * Copyright 2007-2011 by:     SMF Garage (http://www.smfgarage.com)               *
  *                             RRasco (rrasco@smfgarage.com)                       *
@@ -31,7 +32,7 @@ function make_select($make_id = 0)
         )
     );
     while ($row = $smcFunc['db_fetch_assoc']($result)) {
-        $make_select .= ($make_id == $row['id']) ? '<option value="' . $row['id'] . '" selected="selected">' . $row['make'] . '</option>' : '<option value="' . $row['id'] . '">' . $row['make'] . '</option>';
+        $make_select .= ($make_id == $row['id']) ? '<option value="' . $row['id'] . '" selected="selected">' . $smcFunc['htmlspecialchars']($row['make']) . '</option>' : '<option value="' . $row['id'] . '">' . $smcFunc['htmlspecialchars']($row['make']) . '</option>';
     }
     return $make_select;
 }
@@ -42,7 +43,7 @@ function model_options($form_name)
 
     global $smcFunc;
 
-    $model_options = "<script language=\"javascript\" type=\"text/javascript\" >
+    $model_options = "<script type=\"text/javascript\">
     var dol = new DynamicOptionList();
     dol.setFormName(\"" . $form_name . "\");
     dol.addDependentFields(\"make_id\",\"model_id\");
@@ -57,7 +58,7 @@ function model_options($form_name)
         )
     );
     while ($row = $smcFunc['db_fetch_assoc']($result)) {
-        $model_options .= "dol.forValue(\"" . $row['make_id'] . "\").addOptionsTextValue(\"" . $row['model'] . "\", \"" . $row['id'] . "\");\n    ";
+        $model_options .= "dol.forValue(\"" . $row['make_id'] . "\").addOptionsTextValue(\"" . addslashes($smcFunc['htmlspecialchars']($row['model'])) . "\", \"" . $row['id'] . "\");\n    ";
     }
     $model_options .= "</script>";
     return $model_options;
@@ -100,7 +101,7 @@ function cat_select($cat_id = 0)
         )
     );
     while ($row = $smcFunc['db_fetch_assoc']($result)) {
-        $cat_select .= ($cat_id == $row['id']) ? '<option value="' . $row['id'] . '" selected="selected">' . $row['title'] . '</option>' : '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
+        $cat_select .= ($cat_id == $row['id']) ? '<option value="' . $row['id'] . '" selected="selected">' . $smcFunc['htmlspecialchars']($row['title']) . '</option>' : '<option value="' . $row['id'] . '">' . $smcFunc['htmlspecialchars']($row['title']) . '</option>';
     }
     return $cat_select;
 }
@@ -121,7 +122,7 @@ function manufacturer_select($manufacturer_id = 0)
         )
     );
     while ($row = $smcFunc['db_fetch_assoc']($result)) {
-        $manufacturer_select .= ($manufacturer_id == $row['id']) ? '<option value="' . $row['id'] . '" selected="selected">' . $row['title'] . '</option>' : '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
+        $manufacturer_select .= ($manufacturer_id == $row['id']) ? '<option value="' . $row['id'] . '" selected="selected">' . $smcFunc['htmlspecialchars']($row['title']) . '</option>' : '<option value="' . $row['id'] . '">' . $smcFunc['htmlspecialchars']($row['title']) . '</option>';
     }
     return $manufacturer_select;
 }
@@ -132,7 +133,7 @@ function product_options($form_name)
 {
     global $smcFunc;
 
-    $product_options = "<script language=\"javascript\" type=\"text/javascript\">
+    $product_options = "<script type=\"text/javascript\">
     var dol2 = new DynamicOptionList();
     dol2.setFormName(\"" . $form_name . "\");
     dol2.addDependentFields(\"category_id\", \"manufacturer_id\", \"product_id\");
@@ -168,7 +169,7 @@ function product_options($form_name)
             } else {
                 $separator = "";
             }
-            $product_options .= $separator . "\"" . $man_opts[$count2]['title'] . "\", \"" . $man_opts[$count2]['business_id'] . "\"";
+            $product_options .= $separator . "\"" . addslashes($smcFunc['htmlspecialchars']($man_opts[$count2]['title'])) . "\", \"" . $man_opts[$count2]['business_id'] . "\"";
             $count2++;
         }
         $smcFunc['db_free_result'] ($request2);
@@ -203,7 +204,7 @@ function product_options($form_name)
             while ($row3 = $smcFunc['db_fetch_row']($request3)) {
                 list($prod_opts[$count4]['id'],
                     $prod_opts[$count4]['title']) = $row3;
-                $prod_opts[$count4]['title'] = str_replace('"', '\"', $prod_opts[$count4]['title']);
+                $prod_opts[$count4]['title'] = addslashes($smcFunc['htmlspecialchars']($prod_opts[$count4]['title']));
                 if ($count4 > 0) {
                     $separator = ", ";
                 } else {
@@ -240,7 +241,7 @@ function shop_select($shop_id = 0)
         )
     );
     while ($row = $smcFunc['db_fetch_assoc']($result)) {
-        $shop_select .= ($shop_id == $row['id']) ? '<option value="' . $row['id'] . '" selected="selected">' . $row['title'] . '</option>' : '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
+        $shop_select .= ($shop_id == $row['id']) ? '<option value="' . $row['id'] . '" selected="selected">' . $smcFunc['htmlspecialchars']($row['title']) . '</option>' : '<option value="' . $row['id'] . '">' . $smcFunc['htmlspecialchars']($row['title']) . '</option>';
     }
     return $shop_select;
 }
@@ -261,7 +262,7 @@ function install_select($install_id = 0)
         )
     );
     while ($row = $smcFunc['db_fetch_assoc']($result)) {
-        $install_select .= ($install_id == $row['id']) ? '<option value="' . $row['id'] . '" selected="selected">' . $row['title'] . '</option>' : '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
+        $install_select .= ($install_id == $row['id']) ? '<option value="' . $row['id'] . '" selected="selected">' . $smcFunc['htmlspecialchars']($row['title']) . '</option>' : '<option value="' . $row['id'] . '">' . $smcFunc['htmlspecialchars']($row['title']) . '</option>';
     }
     return $install_select;
 }
@@ -282,7 +283,7 @@ function insurer_select($insurer_id = 0)
         )
     );
     while ($row = $smcFunc['db_fetch_assoc']($result)) {
-        $insurer_select .= ($insurer_id == $row['id']) ? '<option value="' . $row['id'] . '" selected="selected">' . $row['title'] . '</option>' : '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
+        $insurer_select .= ($insurer_id == $row['id']) ? '<option value="' . $row['id'] . '" selected="selected">' . $smcFunc['htmlspecialchars']($row['title']) . '</option>' : '<option value="' . $row['id'] . '">' . $smcFunc['htmlspecialchars']($row['title']) . '</option>';
     }
     return $insurer_select;
 }
@@ -303,7 +304,7 @@ function dynocenter_select($dynocenter_id = 0)
         )
     );
     while ($row = $smcFunc['db_fetch_assoc']($result)) {
-        $dynocenter_select .= ($dynocenter_id == $row['id']) ? '<option value="' . $row['id'] . '" selected="selected">' . $row['title'] . '</option>' : '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
+        $dynocenter_select .= ($dynocenter_id == $row['id']) ? '<option value="' . $row['id'] . '" selected="selected">' . $smcFunc['htmlspecialchars']($row['title']) . '</option>' : '<option value="' . $row['id'] . '">' . $smcFunc['htmlspecialchars']($row['title']) . '</option>';
     }
     return $dynocenter_select;
 }
@@ -325,7 +326,7 @@ function track_select($track_id = 0, $disable_pending = false)
     );
     $count = 0;
     while ($row[$count] = $smcFunc['db_fetch_assoc']($result)) {
-        $track_select .= ($track_id == $row[$count]['id']) ? '<option value="' . $row[$count]['id'] . '" selected="selected">' . $row[$count]['title'] . '</option>' : '<option value="' . $row[$count]['id'] . '">' . $row[$count]['title'] . '</option>';
+        $track_select .= ($track_id == $row[$count]['id']) ? '<option value="' . $row[$count]['id'] . '" selected="selected">' . $smcFunc['htmlspecialchars']($row[$count]['title']) . '</option>' : '<option value="' . $row[$count]['id'] . '">' . $smcFunc['htmlspecialchars']($row[$count]['title']) . '</option>';
         $count++;
     }
     return $track_select;
@@ -347,7 +348,7 @@ function service_type_select($type_id = 0)
     );
     $count = 0;
     while ($row[$count] = $smcFunc['db_fetch_assoc']($result)) {
-        $service_type_select .= ($type_id == $row[$count]['id']) ? '<option value="' . $row[$count]['id'] . '" selected="selected">' . $row[$count]['title'] . '</option>' : '<option value="' . $row[$count]['id'] . '">' . $row[$count]['title'] . '</option>';
+        $service_type_select .= ($type_id == $row[$count]['id']) ? '<option value="' . $row[$count]['id'] . '" selected="selected">' . $smcFunc['htmlspecialchars']($row[$count]['title']) . '</option>' : '<option value="' . $row[$count]['id'] . '">' . $smcFunc['htmlspecialchars']($row[$count]['title']) . '</option>';
         $count++;
     }
     return $service_type_select;
@@ -369,7 +370,7 @@ function currency_select($currency_id = 0)
     );
     $count = 0;
     while ($row[$count] = $smcFunc['db_fetch_assoc']($result)) {
-        $currency_select .= ($currency_id == $row[$count]['id']) ? '<option value="' . $row[$count]['id'] . '" selected="selected">' . $row[$count]['title'] . '</option>' : '<option value="' . $row[$count]['id'] . '">' . $row[$count]['title'] . '</option>';
+        $currency_select .= ($currency_id == $row[$count]['id']) ? '<option value="' . $row[$count]['id'] . '" selected="selected">' . $smcFunc['htmlspecialchars']($row[$count]['title']) . '</option>' : '<option value="' . $row[$count]['id'] . '">' . $smcFunc['htmlspecialchars']($row[$count]['title']) . '</option>';
         $count++;
     }
     return $currency_select;
@@ -391,7 +392,7 @@ function engine_type_select($type_id = 0)
     );
     $count = 0;
     while ($row[$count] = $smcFunc['db_fetch_assoc']($result)) {
-        $engine_type_select .= ($type_id == $row[$count]['id']) ? '<option value="' . $row[$count]['id'] . '" selected="selected">' . $row[$count]['title'] . '</option>' : '<option value="' . $row[$count]['id'] . '">' . $row[$count]['title'] . '</option>';
+        $engine_type_select .= ($type_id == $row[$count]['id']) ? '<option value="' . $row[$count]['id'] . '" selected="selected">' . $smcFunc['htmlspecialchars']($row[$count]['title']) . '</option>' : '<option value="' . $row[$count]['id'] . '">' . $smcFunc['htmlspecialchars']($row[$count]['title']) . '</option>';
         $count++;
     }
     return $engine_type_select;
@@ -413,7 +414,7 @@ function premium_type_select($type_id = 0)
     );
     $count = 0;
     while ($row[$count] = $smcFunc['db_fetch_assoc']($result)) {
-        $premium_type_select .= ($type_id == $row[$count]['id']) ? '<option value="' . $row[$count]['id'] . '" selected="selected">' . $row[$count]['title'] . '</option>' : '<option value="' . $row[$count]['id'] . '">' . $row[$count]['title'] . '</option>';
+        $premium_type_select .= ($type_id == $row[$count]['id']) ? '<option value="' . $row[$count]['id'] . '" selected="selected">' . $smcFunc['htmlspecialchars']($row[$count]['title']) . '</option>' : '<option value="' . $row[$count]['id'] . '">' . $smcFunc['htmlspecialchars']($row[$count]['title']) . '</option>';
         $count++;
     }
     return $premium_type_select;
@@ -435,7 +436,7 @@ function lap_type_select($type_id = 0)
     );
     $count = 0;
     while ($row[$count] = $smcFunc['db_fetch_assoc']($result)) {
-        $lap_type_select .= ($type_id == $row[$count]['id']) ? '<option value="' . $row[$count]['id'] . '" selected="selected">' . $row[$count]['title'] . '</option>' : '<option value="' . $row[$count]['id'] . '">' . $row[$count]['title'] . '</option>';
+        $lap_type_select .= ($type_id == $row[$count]['id']) ? '<option value="' . $row[$count]['id'] . '" selected="selected">' . $smcFunc['htmlspecialchars']($row[$count]['title']) . '</option>' : '<option value="' . $row[$count]['id'] . '">' . $smcFunc['htmlspecialchars']($row[$count]['title']) . '</option>';
         $count++;
     }
     return $lap_type_select;
@@ -457,7 +458,7 @@ function track_condition_select($condition_id = 0)
     );
     $count = 0;
     while ($row[$count] = $smcFunc['db_fetch_assoc']($result)) {
-        $track_condition_select .= ($condition_id == $row[$count]['id']) ? '<option value="' . $row[$count]['id'] . '" selected="selected">' . $row[$count]['title'] . '</option>' : '<option value="' . $row[$count]['id'] . '">' . $row[$count]['title'] . '</option>';
+        $track_condition_select .= ($condition_id == $row[$count]['id']) ? '<option value="' . $row[$count]['id'] . '" selected="selected">' . $smcFunc['htmlspecialchars']($row[$count]['title']) . '</option>' : '<option value="' . $row[$count]['id'] . '">' . $smcFunc['htmlspecialchars']($row[$count]['title']) . '</option>';
         $count++;
     }
     return $track_condition_select;
@@ -480,7 +481,7 @@ function dynoqm_select($VID, $dynoqm_id = 0)
         )
     );
     while ($row = $smcFunc['db_fetch_assoc']($result)) {
-        $dynoqm_select .= ($dynoqm_id == $row['id']) ? '<option value="' . $row['id'] . '" selected="selected">' . $row['bhp'] . ' BHP @ ' . $row['bhp_unit'] . '</option>' : '<option value="' . $row['id'] . '">' . $row['bhp'] . ' BHP @ ' . $row['bhp_unit'] . '</option>';
+        $dynoqm_select .= ($dynoqm_id == $row['id']) ? '<option value="' . $row['id'] . '" selected="selected">' . $smcFunc['htmlspecialchars']($row['bhp']) . ' BHP @ ' . $smcFunc['htmlspecialchars']($row['bhp_unit']) . '</option>' : '<option value="' . $row['id'] . '">' . $smcFunc['htmlspecialchars']($row['bhp']) . ' BHP @ ' . $smcFunc['htmlspecialchars']($row['bhp_unit']) . '</option>';
     }
     return $dynoqm_select;
 }
@@ -1751,7 +1752,7 @@ function getFeaturedVehicle()
                     AND mk.pending != "1"
                     AND md.pending != "1"
                     AND v.pending != "1"
-                    GROUP BY total_spent
+                    GROUP BY v.id, IFNULL(m.total_mods,0) + IFNULL(s.total_service,0)
                     ORDER BY total_spent DESC
                 LIMIT 1',
                                         array(// no values
@@ -2236,8 +2237,8 @@ function smfg_footer()
         </tr>
         <tr>
             <td align="center">
-            <span class="smalltext"><a href="http://www.smfgarage.com" target="_blank">' . $txt['smfg_powered_by'] . ' ' . $smfgSettings['version'] . '</a> | <a href="' . $scripturl . '?action=garage;sa=copyright">' . $txt['smfg_copy'] . ' 2007-' . date('Y',
-            time()) . '</a></span>
+            <span class="smalltext">' . $txt['smfg_powered_by'] . ' ' . $smfgSettings['version'] . '</a> | <a href="' . $scripturl . '?action=garage;sa=copyright">' . $txt['smfg_copy'] . ' 2007-' . date('Y',
+            time()) . '</span>
             </td>
         </tr>
     </table>';
@@ -4305,14 +4306,16 @@ function browse_tables($browse_type)
     }
 
     // Assign any group by statements after joins if needed
-    if ($browse_type == "vehicles" || $browse_type == "mostmodified" || $browse_type == "toprated") {
-        $group_by = 'GROUP BY v.id';
+    if ($browse_type == "vehicles") {
+        $group_by = 'GROUP BY v.id, v.made_year, mk.make, md.model, v.color, v.user_id, u.real_name, v.views, v.date_updated';
+    } else if ($browse_type == "mostmodified") {
+        $group_by = 'GROUP BY v.id, v.user_id, v.made_year, mk.make, md.model, u.real_name';
+    } else if ($browse_type == "toprated") {
+        $group_by = 'GROUP BY r.vehicle_id, v.made_year, mk.make, md.model, v.user_id, u.real_name';
+    } else if ($browse_type == "mostspent") {
+        $group_by = 'GROUP BY v.id, IFNULL(m.total_mods,0) + IFNULL(s.total_service,0), v.made_year, mk.make, md.model, v.user_id, u.real_name, c.title';
     } else {
-        if ($browse_type == "mostspent") {
-            $group_by = 'GROUP BY total_spent';
-        } else {
-            $group_by = '';
-        }
+        $group_by = '';
     }
 
     // Disable query check?
@@ -5297,4 +5300,281 @@ function build_submenu($links)
     echo '
     </ul><br /><br />';
 
+}
+
+/**
+ * Parses a video URL and returns embed HTML, thumbnail, dimensions, or validates the URL.
+ *
+ * @param string $url The video URL to parse
+ * @param mixed $type What to return:
+ *   1 = embed HTML, 2 = thumbnail URL, 3 = video ID, 4 = TRUE if valid,
+ *   'height' = height, 'width' = width
+ * @return mixed Depends on $type
+ */
+function displayVideo($url, $type)
+{
+    global $settings;
+
+    $embed = array();
+
+    // YouTube - standard watch URLs
+    $embed[] = array(
+        'name' => 'YouTube',
+        'enabled' => 1,
+        'pattern' => 'https?://(?:(?:www|m)\.)?youtube\.com/watch\?(?:.*?)v=([\w-]+)(?:.*?)(?:[&#?]t=(\d+))?',
+        'embedlink' => 'https://www.youtube.com/embed/$1?start=$2',
+        'width' => '640',
+        'height' => '360',
+        'thumb' => 'https://img.youtube.com/vi/$1/hqdefault.jpg',
+        'video_id' => '$1',
+    );
+
+    // YouTube - short URLs (youtu.be)
+    $embed[] = array(
+        'name' => 'YouTube Short URL',
+        'enabled' => 1,
+        'pattern' => 'https?://youtu\.be/([\w-]+)(?:\?.*?)?',
+        'embedlink' => 'https://www.youtube.com/embed/$1',
+        'width' => '640',
+        'height' => '360',
+        'thumb' => 'https://img.youtube.com/vi/$1/hqdefault.jpg',
+        'video_id' => '$1',
+    );
+
+    // YouTube Shorts
+    $embed[] = array(
+        'name' => 'YouTube Shorts',
+        'enabled' => 1,
+        'pattern' => 'https?://(?:(?:www|m)\.)?youtube\.com/shorts/([\w-]+)',
+        'embedlink' => 'https://www.youtube.com/embed/$1',
+        'width' => '640',
+        'height' => '360',
+        'thumb' => 'https://img.youtube.com/vi/$1/hqdefault.jpg',
+        'video_id' => '$1',
+    );
+
+    // YouTube - embed URLs (already embedded)
+    $embed[] = array(
+        'name' => 'YouTube Embed',
+        'enabled' => 1,
+        'pattern' => 'https?://(?:www\.)?youtube\.com/embed/([\w-]+)',
+        'embedlink' => 'https://www.youtube.com/embed/$1',
+        'width' => '640',
+        'height' => '360',
+        'thumb' => 'https://img.youtube.com/vi/$1/hqdefault.jpg',
+        'video_id' => '$1',
+    );
+
+    // Vimeo
+    $embed[] = array(
+        'name' => 'Vimeo',
+        'enabled' => 1,
+        'pattern' => 'https?://(?:www\.)?vimeo\.com/(\d+)',
+        'embedlink' => 'https://player.vimeo.com/video/$1',
+        'width' => '640',
+        'height' => '360',
+        'thumb' => $settings['default_images_url'] . '/video_thumb.jpg',
+        'video_id' => '$1',
+    );
+
+    // Dailymotion - full URL with slug
+    $embed[] = array(
+        'name' => 'Dailymotion',
+        'enabled' => 1,
+        'pattern' => 'https?://(?:www\.)?dailymotion\.com/video/([a-z0-9]+)',
+        'embedlink' => 'https://www.dailymotion.com/embed/video/$1',
+        'width' => '640',
+        'height' => '360',
+        'thumb' => 'https://www.dailymotion.com/thumbnail/video/$1',
+        'video_id' => '$1',
+    );
+
+    // Dailymotion - short URL
+    $embed[] = array(
+        'name' => 'Dailymotion Short',
+        'enabled' => 1,
+        'pattern' => 'https?://dai\.ly/([a-z0-9]+)',
+        'embedlink' => 'https://www.dailymotion.com/embed/video/$1',
+        'width' => '640',
+        'height' => '360',
+        'thumb' => 'https://www.dailymotion.com/thumbnail/video/$1',
+        'video_id' => '$1',
+    );
+
+    // Facebook Video
+    $embed[] = array(
+        'name' => 'Facebook Video',
+        'enabled' => 1,
+        'pattern' => 'https?://(?:www\.)?facebook\.com/(?:.*?)/videos/(\d+)',
+        'embedlink' => 'https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/facebook/videos/$1/',
+        'width' => '640',
+        'height' => '360',
+        'thumb' => $settings['default_images_url'] . '/video_thumb.jpg',
+        'video_id' => '$1',
+    );
+
+    // Twitch - clips
+    $embed[] = array(
+        'name' => 'Twitch Clip',
+        'enabled' => 1,
+        'pattern' => 'https?://(?:clips\.twitch\.tv|(?:www\.)?twitch\.tv/\w+/clip)/([\w-]+)',
+        'embedlink' => 'https://clips.twitch.tv/embed?clip=$1&parent=localhost',
+        'width' => '640',
+        'height' => '360',
+        'thumb' => $settings['default_images_url'] . '/video_thumb.jpg',
+        'video_id' => '$1',
+    );
+
+    // Twitch - VODs
+    $embed[] = array(
+        'name' => 'Twitch VOD',
+        'enabled' => 1,
+        'pattern' => 'https?://(?:www\.)?twitch\.tv/videos/(\d+)',
+        'embedlink' => 'https://player.twitch.tv/?video=$1&parent=localhost',
+        'width' => '640',
+        'height' => '360',
+        'thumb' => $settings['default_images_url'] . '/video_thumb.jpg',
+        'video_id' => '$1',
+    );
+
+    // Streamable
+    $embed[] = array(
+        'name' => 'Streamable',
+        'enabled' => 1,
+        'pattern' => 'https?://(?:www\.)?streamable\.com/([\w]+)',
+        'embedlink' => 'https://streamable.com/e/$1',
+        'width' => '640',
+        'height' => '360',
+        'thumb' => $settings['default_images_url'] . '/video_thumb.jpg',
+        'video_id' => '$1',
+    );
+
+    // Rumble
+    $embed[] = array(
+        'name' => 'Rumble',
+        'enabled' => 1,
+        'pattern' => 'https?://(?:www\.)?rumble\.com/embed/([\w]+)',
+        'embedlink' => 'https://rumble.com/embed/$1/',
+        'width' => '640',
+        'height' => '360',
+        'thumb' => $settings['default_images_url'] . '/video_thumb.jpg',
+        'video_id' => '$1',
+    );
+
+    // TikTok
+    $embed[] = array(
+        'name' => 'TikTok',
+        'enabled' => 1,
+        'pattern' => 'https?://(?:www\.)?tiktok\.com/@[\w.]+/video/(\d+)',
+        'embedlink' => 'https://www.tiktok.com/embed/v2/$1',
+        'width' => '340',
+        'height' => '700',
+        'thumb' => $settings['default_images_url'] . '/video_thumb.jpg',
+        'video_id' => '$1',
+    );
+
+    // Instagram Reels/Video
+    $embed[] = array(
+        'name' => 'Instagram',
+        'enabled' => 1,
+        'pattern' => 'https?://(?:www\.)?instagram\.com/(?:reel|p)/([\w-]+)',
+        'embedlink' => 'https://www.instagram.com/p/$1/embed',
+        'width' => '400',
+        'height' => '500',
+        'thumb' => $settings['default_images_url'] . '/video_thumb.jpg',
+        'video_id' => '$1',
+    );
+
+    // Odysee
+    $embed[] = array(
+        'name' => 'Odysee',
+        'enabled' => 1,
+        'pattern' => 'https?://(?:www\.)?odysee\.com/(@[^/]+/[^/?&#]+)',
+        'embedlink' => 'https://odysee.com/$/embed/$1',
+        'width' => '640',
+        'height' => '360',
+        'thumb' => $settings['default_images_url'] . '/video_thumb.jpg',
+        'video_id' => '$1',
+    );
+
+    // Bitchute
+    $embed[] = array(
+        'name' => 'Bitchute',
+        'enabled' => 1,
+        'pattern' => 'https?://(?:www\.)?bitchute\.com/video/([\w]+)',
+        'embedlink' => 'https://www.bitchute.com/embed/$1/',
+        'width' => '640',
+        'height' => '360',
+        'thumb' => $settings['default_images_url'] . '/video_thumb.jpg',
+        'video_id' => '$1',
+    );
+
+    // LiveLeak / ItemFix (LiveLeak became ItemFix)
+    $embed[] = array(
+        'name' => 'ItemFix',
+        'enabled' => 1,
+        'pattern' => 'https?://(?:www\.)?itemfix\.com/v\?t=([\w-]+)',
+        'embedlink' => 'https://www.itemfix.com/v?t=$1',
+        'width' => '640',
+        'height' => '360',
+        'thumb' => $settings['default_images_url'] . '/video_thumb.jpg',
+        'video_id' => '$1',
+    );
+
+    // Direct MP4/WEBM video URLs
+    $embed[] = array(
+        'name' => 'Direct Video',
+        'enabled' => 1,
+        'pattern' => '(https?://[^\s<>"]+\.(?:mp4|webm|ogg))',
+        'embedlink' => '$1',
+        'width' => '640',
+        'height' => '360',
+        'thumb' => $settings['default_images_url'] . '/video_thumb.jpg',
+        'video_id' => '$1',
+        'direct_video' => true,
+    );
+
+    // Process embed array - match URL against patterns
+    foreach ($embed as $arr)
+    {
+        if (!$arr['enabled'])
+            continue;
+
+        $pattern = '#' . $arr['pattern'] . '#i';
+
+        if (preg_match($pattern, $url))
+        {
+            switch ($type)
+            {
+                case 1:
+                    // Return embed HTML
+                    if (!empty($arr['direct_video']))
+                    {
+                        $video_src = preg_replace($pattern, $arr['embedlink'], $url);
+                        return '<video width="' . $arr['width'] . '" height="' . $arr['height'] . '" controls>'
+                            . '<source src="' . $video_src . '" type="video/mp4">'
+                            . '</video>';
+                    }
+                    $iframe_src = preg_replace($pattern, $arr['embedlink'], $url);
+                    return '<iframe width="' . $arr['width'] . '" height="' . $arr['height'] . '" src="' . $iframe_src . '" frameborder="0" allowfullscreen="true" allow="autoplay; encrypted-media"></iframe>';
+
+                case 2:
+                    return preg_replace($pattern, $arr['thumb'], $url);
+
+                case 3:
+                    return preg_replace($pattern, $arr['video_id'], $url);
+
+                case 4:
+                    return true;
+
+                case 'height':
+                    return $arr['height'];
+
+                case 'width':
+                    return $arr['width'];
+            }
+        }
+    }
+
+    return false;
 }

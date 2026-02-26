@@ -6,175 +6,38 @@
     <id>RRasco:SMFGarage</id>
     <version>3.0.0</version>
 
-    <file name="$boarddir/index.php">
-        <operation>
-            <search position="before"><![CDATA['findmember' => array('Subs-Auth.php', 'JSMembers'),]]></search>
-            <add><![CDATA[
-        'garage' => array('Garage.php', 'Garage'),
-        'garagemanagement' => array('GarageManagement.php', 'GarageManagement'),
-        'garagesettings' => array('GarageSettings.php', 'GarageSettings'), ]]></add>
-        </operation>
-    </file>     
+    <!-- NOTE: The following edits are now handled by integration hooks (dohooks.php + GarageHooks.php):
+         - index.php: Action routing (integrate_actions)
+         - Admin.php: Admin menu integration (integrate_admin_areas + integrate_menu_buttons)
+         - Subs.php: Menu button + admin permission (integrate_menu_buttons)
+         - ManagePermissions.php: Permission groups, permission list, left groups (integrate_load_permissions)
+         - Security.php: Heavy permissions (integrate_heavy_permissions_session)
+         - Who.php: Who's Online display (integrate_whos_online + whos_online_after)
+    -->
 
+    <!-- 2.1: index.template.php - Global variable for garage settings
+         The heavy lifting for CSS/JS is done in Garage.php via loadCSSFile()/loadJavascriptFile(). -->
     <file name="$themedir/index.template.php">
-    
+
         <operation>
             <search position="after"><![CDATA[;
 
-	// Show right to left and the character set for ease of translating.]]></search>
+	// Show right to left, the language code, and the character set for ease of translating.]]></search>
             <add><![CDATA[, $smfgSettings]]></add>
         </operation>
-        
-        <operation>
-            <search position="replace"><![CDATA[echo '
-</head>
-<body>';]]></search>
-            <add><![CDATA[// Define indices
-    if(!isset($context['lightbox'])) $context['lightbox'] = 0;
-    if(!isset($context['form_validation'])) $context['form_validation'] = 0;
-    if(!isset($context['dynamicoptionlist'])) $context['dynamicoptionlist'] = 0;
-    if(!isset($context['smfg_ajax'])) $context['smfg_ajax'] = 0;     
-    
-    echo '
-        <script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/jquery-1.6.1.min.js"></script> 
-        <script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/jquery.preload.min.js"></script>
-        ';
-        
-    if($smfgSettings['enable_lightbox'] || isset($_REQUEST['area']) && $_REQUEST['area'] == 'forumprofile') {
-        if($context['lightbox'] || isset($_REQUEST['area']) && $_REQUEST['area'] == 'forumprofile') {
-        echo '
-        <!-- Lightbox Includes -->
-        <link rel="stylesheet" href="', $settings['default_theme_url'], '/css/shadowbox.css" type="text/css" media="screen" />
-        <script type="text/javascript" src="', $settings['default_theme_url'], '/css/shadowbox.js"></script> 
-        <script type="text/javascript">
-        Shadowbox.init();
-        </script>
-        ';
-        }
-    }
-    
-    if($context['form_validation']) {
-        echo '
-        <!-- Form Validation Includes -->
-        <script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/gen_validatorv2.js" type="text/javascript"></script>
-        ';
-    }
-    
-    if($context['dynamicoptionlist']) {
-        echo '
-        <!-- Dynamic Option List Includes -->
-        <script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/dynamicoptionlist.js"></script>
-        ';
-    }
-    
-    if($context['smfg_ajax']) {
-        echo '
-        <!-- AJAX For Image Regens -->
-        <link rel="stylesheet" href="', $settings['default_theme_url'], '/css/jquery-ui-1.8.13.custom.css" type="text/css" media="screen" />
-        <script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/jquery-ui-1.8.13.custom.min.js"></script>
-        <script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/smfg_ajax.js"></script>
-        ';
-    }
-    
-    echo '
-        <script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/jquery.tipTip.minified.js"></script>
-        <link rel="stylesheet" href="', $settings['default_theme_url'], '/css/smfg_tips.css" type="text/css" media="screen" />
-        <script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/jquery.jeditable.mini.js"></script>
-        <script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/jquery-smfg.js"></script>
-        <script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/garage_functions.js"></script>
-        ';
-    
-    echo '
-    </head>
-    <body>';
 
-]]></add>
-        </operation>
-    </file>   
+    </file>
 
-    <file name="$sourcedir/Admin.php">
-        <operation>
-            <search position="before"><![CDATA[loadTemplate('Admin', 'admin');]]></search>
-            <add><![CDATA[
-    
-    //Load the garage language.
-    loadLanguage('Garage');]]></add>
-        </operation>
-        
-        <operation>
-            <search position="before"><![CDATA[
-				'sengines' => array(
-					'label' => $txt['search_engines'],
-					'enabled' => in_array('sp', $context['admin_features']),
-					'file' => 'ManageSearchEngines.php',
-					'icon' => 'engines.gif',
-					'function' => 'SearchEngines',
-					'permission' => 'admin_forum',
-					'subsections' => array(
-						'stats' => array($txt['spider_stats']),
-						'logs' => array($txt['spider_logs']),
-						'spiders' => array($txt['spiders']),
-						'settings' => array($txt['settings']),
-					),
-				),
-			),
-		),]]></search>
-            <add><![CDATA[
-        'garage' => array(
-            'title' => $txt['smfg_garage'],
-            'permission' => array('manage_garage_settings', 'manage_garage'),
-            'areas' => array(
-                'garagesettings' => array(
-                    'label' => $txt['smfg_settings'],
-                    'file' => 'GarageSettings.php',
-                    'function' => 'GarageSettings',
-                    'icon' => 'server.gif',
-                    'permission' => array('manage_garage_settings'),
-                    'subsections' => array(
-                        'general' => array($txt['smfg_general'], 'manage_garage_settings'),
-                        'menusettings' => array($txt['smfg_menu'], 'manage_garage_settings'),
-                        'indexsettings' => array($txt['smfg_index'], 'manage_garage_settings'),
-                        'imagesettings' => array($txt['smfg_images'], 'manage_garage_settings'),
-                        'videosettings' => array($txt['smfg_videos'], 'manage_garage_settings'),
-                        'modulesettings' => array($txt['smfg_modules'], 'manage_garage_settings'),
-                    ),
-                ),
-                'garagemanagement' => array(
-                    'label' => $txt['smfg_management'],
-                    'file' => 'GarageManagement.php',
-                    'function' => 'GarageManagement',
-                    'icon' => 'corefeatures.gif',
-                    'permission' => array('manage_garage'),
-                    'subsections' => array(
-                        'business' => array($txt['smfg_businesses'], 'manage_garage'),
-                        'categories' => array($txt['smfg_categories'], 'manage_garage'),
-                        'makesmodels' => array($txt['smfg_mm'], 'manage_garage'),
-                        'products' => array($txt['smfg_products'], 'manage_garage'),
-                        'tracks' => array($txt['smfg_tracks'], 'manage_garage'),
-                        'other' => array($txt['smfg_other'], 'manage_garage'),
-                        'tools' => array($txt['smfg_tools'], 'manage_garage'),
-                        'pending' => array($txt['smfg_pending'], 'manage_garage'),
-                    ),
-                ),
-            ),
-        ),]]></add>
-        </operation>
-        
-        <operation>
-            <search position="before"><![CDATA[isAllowedTo(array(]]></search>
-            <add><![CDATA['manage_garage_settings', 'manage_garage', ]]></add>
-        </operation>
-    </file>       
-
+    <!-- 2.1: Subs.php - constructPageIndex + Image action filtering -->
     <file name="$sourcedir/Subs.php">
-        
+
         <operation>
-            <search position="before"><![CDATA[function constructPageIndex($base_url, &$start, $max_value, $num_per_page, $flexible_start = false]]></search>
+            <search position="before"><![CDATA[function constructPageIndex($base_url, &$start, $max_value, $num_per_page, $flexible_start = false, $show_prevnext = true]]></search>
             <add><![CDATA[, $type = "none"]]></add>
         </operation>
-        
+
         <operation>
-            <search position="replace"><![CDATA[$base_link = '<a class="navPages" href="' . ($flexible_start ? $base_url : strtr($base_url, array('%' => '%%')) . ';start=%1$d') . '">%2$s</a> ';]]></search>
+            <search position="replace"><![CDATA[$base_link = strtr($settings['page_index']['page'], array('{URL}' => $flexible_start ? $base_url : strtr($base_url, array('%' => '%%')) . ';start=%1$d'));]]></search>
             <add><![CDATA[if($type == "blog") {
         $typeStart = "blog_";
         $tabType = "#blog";
@@ -186,10 +49,10 @@
         $tabType = '';
     }
 
-    //$base_link = '<a class="navPages" href="' . ($flexible_start ? $base_url : strtr($base_url, array('%' => '%%')) . ';start=%1$d') . '">%2$s</a> ';
-    $base_link = '<a class="navPages" href="' . ($flexible_start ? $base_url : strtr($base_url, array('%' => '%%')) . ';'.$typeStart.'start=%1$d'.$tabType) . '">%2$s</a> ';]]></add>
+    $base_link = strtr($settings['page_index']['page'], array('{URL}' => $flexible_start ? $base_url : strtr($base_url, array('%' => '%%')) . ';'.$typeStart.'start=%1$d'.$tabType));]]></add>
         </operation>
-        
+
+        <!-- 2.1: Subs.php - Image action filtering -->
         <operation>
             <search position="replace"><![CDATA[if (preg_match('~action(=|%3d)(?!dlattach)~i', $imgtag) != 0)
 							$imgtag = preg_replace('~action(?:=|%3d)(?!dlattach)~i', 'action-', $imgtag);]]></search>
@@ -198,42 +61,23 @@
                             //$imgtag = preg_replace('~action(?:=|%3d)(?!dlattach)~i', 'action-', $imgtag);
                             $imgtag = preg_replace('~action(=|%3d)(?!dlattach)(?!garage)~i', 'action-', $imgtag);]]></add>
         </operation>
-        
-        <operation>
-            <search position="before"><![CDATA['home' => array(
-				'title' => $txt['home'],
-				'href' => $scripturl,
-				'show' => true,
-				'sub_buttons' => array(
-				),
-				'is_last' => $context['right_to_left'],
-			),]]></search>
-            <add><![CDATA[
-            'garage' => array(
-                'title' => $txt['smfg_garage'],
-                'href' => $scripturl . '?action=garage',
-                'show' => true,
-                'sub_buttons' => array(
-                ),
-            ),]]></add>
-        </operation>
-        
-        <operation>
-            <search position="before"><![CDATA[$context['allow_admin'] = allowedTo(array(]]></search>
-            <add><![CDATA['manage_garage_settings', 'manage_garage', ]]></add>
-        </operation>
-    </file>  
-    
-    <file name="$sourcedir/Subs-Post.php">        
-        <operation>
-            <search position="replace"><![CDATA[return $matches[1] . preg_replace('~action(=|%3d)(?!dlattach)~i', 'action-', $matches[2]) . '[/img]';]]></search>
-            <add><![CDATA[//return $matches[1] . preg_replace('~action(=|%3d)(?!dlattach)~i', 'action-', $matches[2]) . '[/img]'; //edit by SMF Garage
-	return $matches[1] . preg_replace('~action(=|%3d)(?!dlattach)(?!garage)~i', 'action-', $matches[2]) . '[/img]';]]></add>
-        </operation>
-    </file>  
+    </file>
 
+    <!-- 2.1: Subs-Post.php - Image action filtering
+         Note: If this exact search text is not found in SMF 2.1, this operation will fail gracefully. -->
+    <file name="$sourcedir/Subs-Post.php" error="skip">
+        <operation error="skip">
+            <search position="replace"><![CDATA[return "$m[1]" . preg_replace("~action(=|%3d)(?!dlattach)~i", "action-", "$m[2]") . "[/img]";]]></search>
+            <add><![CDATA[//return "$m[1]" . preg_replace("~action(=|%3d)(?!dlattach)~i", "action-", "$m[2]") . "[/img]"; //edit by SMF Garage
+			return "$m[1]" . preg_replace("~action(=|%3d)(?!dlattach)(?!garage)~i", "action-", "$m[2]") . "[/img]";]]></add>
+        </operation>
+    </file>
+
+    <!-- 2.1: ManagePermissions.php - $groupLevels and $context['non_guest_permissions']
+         NOTE: Permission groups, permission list, and left groups are now handled by
+         integrate_load_permissions hook in GarageHooks.php -->
     <file name="$sourcedir/ManagePermissions.php">
-        
+
         <operation>
             <search position="before"><![CDATA[$groupLevels['board']['restrict'] = array(]]></search>
             <add><![CDATA[
@@ -256,7 +100,7 @@
         'view_laps',
         'post_comments',]]></add>
         </operation>
-        
+
         <operation>
             <search position="before"><![CDATA[$groupLevels['board']['moderator'] = array_merge($groupLevels['board']['standard'], array(]]></search>
             <add><![CDATA[
@@ -282,77 +126,7 @@
         'post_comments',
         'own_vehicle',]]></add>
         </operation>
-        
-        <operation>
-            <search position="before"><![CDATA['administrate',]]></search>
-            <add><![CDATA[
-                'garage',
-                'garage_acp',]]></add>
-        </operation>
-        
-        <operation>
-            <search position="after"><![CDATA[),
-		),
-		'board' => array(]]></search>
-            <add><![CDATA['garage',
-                'garage_acp',
-			]]></add>
-        </operation>
-        
-        <operation>
-            <search position="before"><![CDATA['profile_remote_avatar' => array(false, 'profile', 'use_avatar'),]]></search>
-            <add><![CDATA[
-            'view_garage' => array(false, 'garage', 'garage'),
-            'browse_vehicles' => array(false, 'garage', 'garage'),
-            'view_vehicles' => array(false, 'garage', 'garage'),
-            'own_vehicle' => array(false, 'garage', 'garage'),
-            'search_vehicles' => array(false, 'garage', 'garage'),
-            'browse_insurance' => array(false, 'garage', 'garage'),
-            'view_insurance' => array(false, 'garage', 'garage'),
-            'browse_shops' => array(false, 'garage', 'garage'),
-            'view_shops' => array(false, 'garage', 'garage'),
-            'browse_garages' => array(false, 'garage', 'garage'),
-            'view_garages' => array(false, 'garage', 'garage'),
-            'browse_qms' => array(false, 'garage', 'garage'),
-            'view_qms' => array(false, 'garage', 'garage'),
-            'browse_dynos' => array(false, 'garage', 'garage'),
-            'view_dynos' => array(false, 'garage', 'garage'),
-            'browse_laps' => array(false, 'garage', 'garage'),
-            'view_laps' => array(false, 'garage', 'garage'),
-            'post_comments' => array(false, 'garage', 'garage'),
-            'manage_garage_settings' => array(false, 'garage_acp', 'garage_acp'),
-            'manage_garage_general' => array(false, 'garage_acp', 'garage_acp'),
-            'manage_garage_menu' => array(false, 'garage_acp', 'garage_acp'),
-            'manage_garage_index' => array(false, 'garage_acp', 'garage_acp'),
-            'manage_garage_images' => array(false, 'garage_acp', 'garage_acp'),
-            'manage_garage_videos' => array(false, 'garage_acp', 'garage_acp'),
-            'manage_garage_modules' => array(false, 'garage_acp', 'garage_acp'),
-            'manage_garage' => array(false, 'garage_acp', 'garage_acp'),
-            'manage_garage_businesses' => array(false, 'garage_acp', 'garage_acp'),
-            'manage_garage_categories' => array(false, 'garage_acp', 'garage_acp'),
-            'manage_garage_makes_models' => array(false, 'garage_acp', 'garage_acp'),
-            'manage_garage_products' => array(false, 'garage_acp', 'garage_acp'),
-            'manage_garage_tools' => array(false, 'garage_acp', 'garage_acp'),
-            'manage_garage_tracks' => array(false, 'garage_acp', 'garage_acp'),
-            'manage_garage_other' => array(false, 'garage_acp', 'garage_acp'),
-            'manage_garage_pending' => array(false, 'garage_acp', 'garage_acp'),
-            'edit_all_vehicles' => array(false, 'garage_acp', 'garage_acp'),
-            'edit_all_comments' => array(false, 'garage_acp', 'garage_acp'),
-            'limit_exemption' => array(false, 'garage_acp', 'garage_acp'),]]></add>
-        </operation>
-        
-        <operation>
-            <search position="before"><![CDATA[$leftPermissionGroups = array(
-		'general',
-		'calendar',
-		'maintenance',
-		'member_admin',
-		'topic',
-		'post',]]></search>
-            <add><![CDATA[
-        'garage',]]></add>
-        </operation>
-        
+
         <operation>
             <search position="before"><![CDATA[$context['non_guest_permissions'] = array(]]></search>
             <add><![CDATA[
@@ -378,39 +152,32 @@
         'post_comments',
         'own_vehicle',]]></add>
         </operation>
-    </file>        
-
-    <file name="$sourcedir/Security.php">
-        <operation>
-            <search position="before"><![CDATA[static $heavy_permissions = array(]]></search>
-            <add><![CDATA[
-        'manage_garage',
-        'manage_garage_settings',]]></add>
-        </operation>
     </file>
 
-    <file name="$sourcedir/Profile.php">        
+    <!-- 2.1: Profile.php -->
+    <file name="$sourcedir/Profile.php">
         <operation>
             <search position="before"><![CDATA[require_once($sourcedir . '/Subs-Menu.php');]]></search>
             <add><![CDATA[
-    
+
     // We need our functions!
     require_once('GarageFunctions.php');
     loadLanguage('Garage');
-    
+
     // Load settings
     loadSmfgConfig();]]></add>
         </operation>
-        
+
         <operation>
             <search position="before"><![CDATA[updateMemberData($memID, $profile_vars);]]></search>
             <add><![CDATA[
-            
+
             // Update garage notification options
+            checkSession();
             if(!isset($_POST['pm_opt_out'])) $_POST['pm_opt_out'] = 0;
             if(!isset($_POST['email_opt_out'])) $_POST['email_opt_out'] = 0;
             if(!isset($_POST['gb_opt_out'])) $_POST['gb_opt_out'] = 0;
-            
+
             if($_POST['pm_opt_out'] != '' && $_POST['email_opt_out'] != '') {
                 $request = $smcFunc['db_query']('', '
                     UPDATE {db_prefix}garage_notifications
@@ -423,7 +190,7 @@
                     )
                 );
             }
-            
+
             if($_POST['gb_opt_out'] != '') {
                 $request = $smcFunc['db_query']('', '
                     SELECT id
@@ -436,7 +203,7 @@
                 $numRows = $smcFunc['db_num_rows']($request);
                 $smcFunc['db_free_result']($request);
                 if($numRows == 0) {
-                    $request = $smcFunc['db_insert']('insert', 
+                    $request = $smcFunc['db_insert']('insert',
                         '{db_prefix}garage_notifications_misc',
                         array(
                             'user_id' => 'int', 'gb_opt_out' => 'int',
@@ -458,11 +225,11 @@
                 }
             }]]></add>
         </operation>
-        
+
         <operation>
             <search position="before"><![CDATA[$context['page_title'] = $txt['profile'] . (isset($txt[$current_area]) ? ' - ' . $txt[$current_area] : '');]]></search>
             <add><![CDATA[
-    
+
     // Get vehicle data
     $request = $smcFunc['db_query']('', '
         SELECT v.id, CONCAT_WS(" ", v.made_year, mk.make, md.model)
@@ -481,7 +248,7 @@
     list($context['member']['vid'],
          $context['member']['vehicle']) = $smcFunc['db_fetch_row']($request);
     $smcFunc['db_free_result']($request);
-    
+
     // Get total vehicles
     $request = $smcFunc['db_query']('', '
         SELECT COUNT(id)
@@ -495,27 +262,26 @@
     list($context['member']['total_vehicles']) = $smcFunc['db_fetch_row']($request);
     $smcFunc['db_free_result']($request);]]></add>
         </operation>
-        
-        <!-- Duplicate notification block removed - handled by the updateMemberData operation above -->
-       </file>
 
+        <!-- Removed duplicate notification block that was in 2.0 version -->
+    </file>
+
+    <!-- 2.1: Profile-Modify.php
+         In SMF 2.1, the globals line and notification section have changed.
+         We search for the function name instead. -->
     <file name="$sourcedir/Profile-Modify.php">
         <operation>
-            <search position="before"><![CDATA[global $context, $user_profile, $user_info, $txt, $modSettings;]]></search>
+            <search position="before"><![CDATA[function alert_configuration($memID, $defaultSettings = false)
+{]]></search>
             <add><![CDATA[
-    
+
     // We need garage talk...
     loadLanguage('Garage');]]></add>
         </operation>
-        
-        <operation>
-            <search position="before"><![CDATA[// What options are set?
-	$context['member'] += array(
-		'notify_announcements' => $user_profile[$memID]['notify_announcements'],
-		'notify_send_body' => $user_profile[$memID]['notify_send_body'],
-		'notify_types' => $user_profile[$memID]['notify_types'],
-		'notify_regularity' => $user_profile[$memID]['notify_regularity'],
-	);]]></search>
+
+        <operation error="skip">
+            <search position="after"><![CDATA[$context['member'] += array(
+		'alert_timeout' => isset($context['alert_prefs']['alert_timeout']) ? $context['alert_prefs']['alert_timeout'] : 10,]]></search>
             <add><![CDATA[
 
     // Get Garage pending notification options
@@ -531,7 +297,7 @@
          $context['pm_opt_out'],
          $context['email_opt_out']) = $smcFunc['db_fetch_row']($request);
     $smcFunc['db_free_result']($request);
-    
+
     // And misc notifications
     $request = $smcFunc['db_query']('', '
         SELECT user_id, gb_opt_out
@@ -544,164 +310,33 @@
     list($context['userID'],
          $context['gb_opt_out']) = $smcFunc['db_fetch_row']($request);
     $smcFunc['db_free_result']($request);
-    
+
     // We need our functions!
     require_once('GarageFunctions.php');
     loadLanguage('Garage');
-    
+
     // Load settings
     loadSmfgConfig();
-    
+
     if($context['pm_opt_out'] == 1) $context['pm_opt_out_check'] = " checked=\"checked\"";
     if($context['email_opt_out'] == 1) $context['email_opt_out_check'] = " checked=\"checked\"";
     if($context['gb_opt_out'] == 1) $context['gb_opt_out_check'] = " checked=\"checked\"";
-    
+
     if(!isset($context['pm_opt_out_check'])) $context['pm_opt_out_check'] = "";
     if(!isset($context['email_opt_out_check'])) $context['email_opt_out_check'] = "";
     if(!isset($context['gb_opt_out_check'])) $context['gb_opt_out_check'] = "";]]></add>
         </operation>
-      </file>
-      
-      <file name="$themedir/Profile.template.php"> 
-       
-        <operation>
-            <search position="after"><![CDATA[;
-
-	// Display the basic information about the user]]></search>
-            <add><![CDATA[, $smfgSettings]]></add>
-        </operation>
-              
-        <operation>
-            <search position="before"><![CDATA[if (!isset($context['disabled_fields']['location']) && !empty($context['member']['location']))
-		echo '
-					<dt>', $txt['location'], ':</dt>
-					<dd>', $context['member']['location'], '</dd>';]]></search>
-            <add><![CDATA[
-                
-    // Do they have a vehicle?
-    if($smfgSettings['integrate_profile'] && $context['member']['vehicle']) {
-
-    echo '
-                <dt>', $txt['smfg_vehicle'], ' </b>(1 '.$txt['smfg_of'].' '.$context['member']['total_vehicles'].'):</dt>
-                <dd><a href="'.$scripturl.'?action=garage;sa=view_vehicle;VID='.$context['member']['vid'].'">', $context['member']['vehicle'], '</a></dd>';
-    }]]></add>
-        </operation>
-              
-        <operation>
-            <search position="before"><![CDATA[<label for="notify_send_body"><input type="checkbox" id="notify_send_body" name="notify_send_body"', !empty($context['member']['notify_send_body']) ? ' checked="checked"' : '', ' class="input_check" /> ', $txt['notify_send_body'], '</label><br />';]]></search>
-            <add><![CDATA[
-
-    // Garage notification options
-    if($smfgSettings['enable_pm_pending_notify_optout']) {
-    echo '
-                        <input type="hidden" name="pm_opt_out" value="0" />
-                        <input type="checkbox" id="pm_opt_out" value="1" name="pm_opt_out"'.$context['pm_opt_out_check'].' class="check" /> ', $txt['smfg_pm_opt_out'], '<br />';
-    }
-    if($smfgSettings['enable_email_pending_notify_optout']) {
-    echo '
-                        <input type="hidden" name="email_opt_out" value="0" />
-                        <input type="checkbox" id="email_opt_out" value="1" name="email_opt_out"'.$context['email_opt_out_check'].' class="check" /> ', $txt['smfg_email_opt_out'], '<br />';
-    }
-    echo '
-                        <input type="hidden" name="gb_opt_out" value="0" />
-                        <input type="checkbox" id="gb_opt_out" value="1" name="gb_opt_out"'.$context['gb_opt_out_check'].' class="check" /> ', $txt['smfg_gb_opt_out'], '<br />';]]></add>
-        </operation>
-              
-        <operation>
-            <search position="replace"><![CDATA[echo '
-							<dt>
-								<strong>', $txt['signature'], ':</strong><br />
-								<span class="smalltext">', $txt['sig_info'], '</span><br />
-								<br />';]]></search>
-            <add><![CDATA[echo '
-							<dt>
-								<strong>', $txt['signature'], ':</strong><br />
-								<span class="smalltext">', $txt['sig_info'], '</span><br /><br />
-                                <a href="'.$scripturl.'?action=garage;sa=get_gcard;u='.$_REQUEST['u'].'" rel="shadowbox;width=605;height=600" title="'.$txt['smfg_gcard_info'].'">'.$txt['smfg_get_gcard'].'</a><br />
-								<br />';]]></add>
-        </operation>
-              
-        <operation>
-            <search position="before"><![CDATA[global $context, $settings, $options, $txt, $scripturl, $modSettings]]></search>
-            <add><![CDATA[, $smfgSettings]]></add>
-        </operation>
     </file>
-      
-      <file name="$sourcedir/Display.php">
-              
-        <operation>
-            <search position="replace"><![CDATA[// What?  It's not like it *couldn't* be only guests in this topic...
-		if (!empty($posters))
-			loadMemberData($posters);
-		$messages_request = $smcFunc['db_query']('', '
-			SELECT
-				id_msg, icon, subject, poster_time, poster_ip, id_member, modified_time, modified_name, body,
-				smileys_enabled, poster_name, poster_email, approved,
-				id_msg_modified < {int:new_from} AS is_read
-			FROM {db_prefix}messages
-			WHERE id_msg IN ({array_int:message_list})
-			ORDER BY id_msg' . (empty($options['view_newest_first']) ? '' : ' DESC'),
-			array(
-				'message_list' => $messages,
-				'new_from' => $topicinfo['new_from'],
-			)
-		);]]></search>
-            <add><![CDATA[// *************************************************************
-        // WARNING: The query check is being disabled to allow for the following subselect.
-        // It is imperative this is turned back on for security reasons.
-        // This is safe because all query parameters use SMF's parameterized placeholders.
-        // For SMF 2.1, use integrate_query_message hook instead.
-        // *************************************************************
-        $modSettings['disableQueryCheck'] = 1;
-        // *************************************************************
 
-        // What?  It's not like it *couldn't* be only guests in this topic...
-        if (!empty($posters))
-            loadMemberData($posters);
-        $messages_request = $smcFunc['db_query']('', "
-            SELECT
-                m.id_msg, m.icon, m.subject, m.poster_time, m.poster_ip, m.id_member, m.modified_time, m.modified_name, m.body,
-                m.smileys_enabled, m.poster_name, m.poster_email, approved,
-                m.id_msg_modified < {int:new_from} AS isRead,
-                uv.vehicle, uv.vid
-            FROM {db_prefix}messages AS m
-            LEFT OUTER JOIN (
-                    SELECT CONCAT_WS(' ', v.made_year, mk.make, md.model) AS vehicle, v.id AS vid, v.user_id
-                    FROM {db_prefix}garage_vehicles AS v, {db_prefix}garage_makes AS mk, {db_prefix}garage_models AS md
-                    WHERE v.make_id = mk.id
-                        AND v.model_id = md.id
-                        AND v.main_vehicle = 1
-                        AND mk.pending != '1'
-                        AND md.pending != '1'
-                        AND v.pending != '1'
-                    ) AS uv ON uv.user_id = m.id_member
-            WHERE m.id_msg IN ({array_int:message_list})
-            ORDER BY m.id_msg" . (empty($options['view_newest_first']) ? '' : ' DESC'), 
-            array(
-                'message_list' => $messages,
-                'new_from' => $topicinfo['new_from'],
-            )
-        );
-            
-        // *************************************************************
-        // WARNING: The query check is being enabled, this MUST BE DONE!
-        // *************************************************************
-        $modSettings['disableQueryCheck'] = 0;
-        // *************************************************************]]></add>
-        </operation>  
-            
+    <!-- 2.1: Display.php - Vehicle data in topic display -->
+    <file name="$sourcedir/Display.php">
+
+        <!-- Add garage vehicle data to member context using prepareDisplayContext -->
         <operation>
             <search position="before"><![CDATA[global $settings, $txt, $modSettings, $scripturl, $options, $user_info, $smcFunc]]></search>
             <add><![CDATA[, $smfgSettings]]></add>
-        </operation>  
-        
-        <operation>
-            <search position="before"><![CDATA[$memberContext[$message['id_member']]['ip'] = $message['poster_ip'];]]></search>
-            <add><![CDATA[
-	$memberContext[$message['id_member']]['vid'] = $message['vid'];
-	$memberContext[$message['id_member']]['vehicle'] = $message['vehicle'];]]></add>
         </operation>
-            
+
         <operation>
             <search position="after"><![CDATA[static $counter = null;]]></search>
             <add><![CDATA[// A few garage items...
@@ -711,60 +346,207 @@
 
 	]]></add>
         </operation>
-        
+
+        <!-- For SMF 2.1, we add the vehicle lookup after the member context is built,
+             rather than modifying the message query directly. This avoids disableQueryCheck. -->
+        <operation>
+            <search position="before"><![CDATA[$memberContext[$message['id_member']]['ip'] = inet_dtop($message['poster_ip']);]]></search>
+            <add><![CDATA[
+    // Garage: Look up main vehicle for this member
+    $garage_veh_request = $smcFunc['db_query']('', '
+        SELECT CONCAT_WS(\' \', v.made_year, mk.make, md.model) AS vehicle, v.id AS vid
+        FROM {db_prefix}garage_vehicles AS v
+        INNER JOIN {db_prefix}garage_makes AS mk ON v.make_id = mk.id
+        INNER JOIN {db_prefix}garage_models AS md ON v.model_id = md.id
+        WHERE v.user_id = {int:user_id}
+            AND v.main_vehicle = 1
+            AND v.pending != {string:pending}
+            AND mk.pending != {string:pending}
+            AND md.pending != {string:pending}
+        LIMIT 1',
+        array(
+            'user_id' => $message['id_member'],
+            'pending' => '1',
+        )
+    );
+    if ($garage_veh_row = $smcFunc['db_fetch_assoc']($garage_veh_request)) {
+        $memberContext[$message['id_member']]['vid'] = $garage_veh_row['vid'];
+        $memberContext[$message['id_member']]['vehicle'] = $garage_veh_row['vehicle'];
+    } else {
+        $memberContext[$message['id_member']]['vid'] = '';
+        $memberContext[$message['id_member']]['vehicle'] = '';
+    }
+    $smcFunc['db_free_result']($garage_veh_request);
+]]></add>
+        </operation>
+
     </file>
-      
-      <file name="$themedir/Display.template.php">        
+
+    <!-- 2.1: Display.template.php
+         In SMF 2.1, the post count section uses <dt> with class attributes. -->
+    <file name="$themedir/Display.template.php">
         <operation>
             <search position="before"><![CDATA[// Show how many posts they have made.
-			if (!isset($context['disabled_fields']['posts']))
-				echo '
+		if (!isset($context['disabled_fields']['posts']))
+			echo '
 								<li class="postcount">', $txt['member_postcount'], ': ', $message['member']['posts'], '</li>';]]></search>
             <add><![CDATA[
-                                
+
             if($smfgSettings['integrate_viewtopic'] && isset($message['member']['vehicle'])) {
-            
+
                 // Show their main vehicle.
                 echo '
                                     <li class="postcount">', $txt['smfg_vehicle'], ': <a href="'.$scripturl.'?action=garage;sa=view_vehicle;VID='.$message['member']['vid'].'">', $message['member']['vehicle'], '</a></li>';
-                                    
+
             }]]></add>
-        </operation>       
-        
+        </operation>
+
         <operation>
-            <search position="before"><![CDATA[global $context, $settings, $options, $txt, $scripturl, $modSettings]]></search>
+            <search position="after"><![CDATA[;
+
+	$ignoring = false;]]></search>
             <add><![CDATA[, $smfgSettings]]></add>
         </operation>
     </file>
-      
-      <file name="$languagedir/index.english.php">        
+
+    <!-- 2.1: Profile.template.php
+         In SMF 2.1, the template structure has changed. We use error="skip" for patches
+         that may not match exactly. -->
+    <file name="$themedir/Profile.template.php">
+
+        <operation>
+            <search position="after"><![CDATA[;
+
+	// Display the basic information about the user]]></search>
+            <add><![CDATA[, $smfgSettings]]></add>
+        </operation>
+
+        <!-- Vehicle display in profile - add after age display in SMF 2.1 -->
+        <operation error="skip">
+            <search position="before"><![CDATA[echo '
+				<dt>', $txt['age'], ':</dt>
+				<dd>', $context['member']['age'] . ($context['member']['today_is_birthday'] ? ' &nbsp; <img src="' . $settings['images_url'] . '/cake.png" alt="">' : ''), '</dd>';]]></search>
+            <add><![CDATA[
+
+    // Do they have a vehicle?
+    if(!empty($smfgSettings['integrate_profile']) && !empty($context['member']['vehicle'])) {
+
+    echo '
+				<dt>', $txt['smfg_vehicle'], ' (1 '.$txt['smfg_of'].' '.$context['member']['total_vehicles'].'):</dt>
+				<dd><a href="'.$scripturl.'?action=garage;sa=view_vehicle;VID='.$context['member']['vid'].'">', $context['member']['vehicle'], '</a></dd>';
+    }]]></add>
+        </operation>
+
+        <!-- Notification options in profile - use error="skip" since 2.1 uses alert system -->
+        <operation error="skip">
+            <search position="before"><![CDATA[<input type="number" size="4" id="notify_alert_timeout" name="opt_alert_timeout" min="0" max="127" value="', $context['member']['alert_timeout'], '">
+					</dd>';]]></search>
+            <add><![CDATA[
+
+    // Garage notification options
+    if(!empty($smfgSettings['enable_pm_pending_notify_optout'])) {
+    echo '
+					<dt>
+						<label for="pm_opt_out">', $txt['smfg_pm_opt_out'], '</label>
+					</dt>
+					<dd>
+						<input type="hidden" name="pm_opt_out" value="0">
+						<input type="checkbox" id="pm_opt_out" value="1" name="pm_opt_out"'.$context['pm_opt_out_check'].'>
+					</dd>';
+    }
+    if(!empty($smfgSettings['enable_email_pending_notify_optout'])) {
+    echo '
+					<dt>
+						<label for="email_opt_out">', $txt['smfg_email_opt_out'], '</label>
+					</dt>
+					<dd>
+						<input type="hidden" name="email_opt_out" value="0">
+						<input type="checkbox" id="email_opt_out" value="1" name="email_opt_out"'.$context['email_opt_out_check'].'>
+					</dd>';
+    }
+    echo '
+					<dt>
+						<label for="gb_opt_out">', $txt['smfg_gb_opt_out'], '</label>
+					</dt>
+					<dd>
+						<input type="hidden" name="gb_opt_out" value="0">
+						<input type="checkbox" id="gb_opt_out" value="1" name="gb_opt_out"'.$context['gb_opt_out_check'].'>
+					</dd>';]]></add>
+        </operation>
+
+        <!-- Signature section - In SMF 2.1 no colon after signature text -->
+        <operation error="skip">
+            <search position="replace"><![CDATA[<dt>
+								<strong>', $txt['signature'], '</strong><br>
+								<span class="smalltext">', $txt['sig_info'], '</span><br>
+								<br>';]]></search>
+            <add><![CDATA[
+            ';
+            
+            global $scripturl;
+echo '
+							<dt>
+								<strong>', $txt['signature'], '</strong><br>
+								<span class="smalltext">', $txt['sig_info'], '</span><br><br>
+								<a href="'.$scripturl.'?action=garage;sa=get_gcard;u='.$_REQUEST['u'].'" rel="shadowbox;width=605;height=600" title="'.$txt['smfg_gcard_info'].'">'.$txt['smfg_get_gcard'].'</a><br>
+								<br>';]]></add>
+        </operation>
+
+        <!-- In SMF 2.1, template_alert_configuration() needs $smfgSettings for notification options -->
+        <operation error="skip">
+            <search position="before"><![CDATA[global $context, $txt, $scripturl, $modSettings]]></search>
+            <add><![CDATA[, $smfgSettings]]></add>
+        </operation>
+    </file>
+
+    <!-- 2.1: CSS - Fallback garage CSS rules appended to index.css -->
+    <file name="$themedir/css/index.css" error="skip">
+        <operation error="skip">
+            <search position="end" />
+            <add><![CDATA[
+
+/* SMF Garage - Pending background */
+.windowbg_pending
+{
+    color: #000;
+    background-color: #eeb4b4;
+}
+
+/* Responsive rules for small screens */
+@media screen and (min-width: 240px) and (max-width: 640px) {
+
+    /* Responsive Curve menu icon */
+    .responsive_menu.garage {
+        background: url(../images/garage.png) no-repeat;
+        height: 16px;
+        width: 16px;
+        display: inline-block;
+    }
+}
+]]></add>
+        </operation>
+    </file>
+
+    <!-- 2.1: Language files
+         In SMF 2.1, language files don't use -utf8 suffix. Files are just Garage.english.php.
+         These patches target the standard (non-utf8) filenames used in 2.1. -->
+    <file name="$languagedir/index.english.php">
         <operation>
             <search position="end" />
             <add><![CDATA[
-            
+
 $txt['smfg_garage'] = 'Garage';
 
 ]]></add>
         </operation>
     </file>
-      
-      <file name="$languagedir/index.english-utf8.php" error="skip">
-        <operation>
-            <search position="end" />
-            <add><![CDATA[
-            
-$txt['smfg_garage'] = 'Garage';
 
-]]></add>
-        </operation>
-    </file>
-      
-      <file name="$languagedir/Admin.english.php">        
+    <file name="$languagedir/Admin.english.php">
         <operation>
             <search position="end" />
             <add><![CDATA[
 $txt['paid_subs_view'] = 'View Subscriptions';
-            
+
 $txt['managegarage_settings'] = 'Manage Garage Settings';
 $txt['settings_general'] = 'This menu allows you to set your basic garage configuration options.';
 $txt['settings_menu'] = 'This menu allows you to enable/disable the links available in the main garage menu.';
@@ -783,12 +565,12 @@ $txt['management_tools'] = 'Here you can use the provided utilities to optimize 
 $txt['management_pending'] = 'Any pending items will be shown here for you to approve, edit, or delete.  Any items that have been disabled will also show here until they are re-approved.';]]></add>
         </operation>
     </file>
-      
-      <file name="$languagedir/Help.english.php">        
+
+    <file name="$languagedir/Help.english.php">
         <operation>
             <search position="end" />
             <add><![CDATA[
-      
+
 $helptxt['year_range'] = 'This is the earliest year you want to appear as a selection for a new vehicle. Format CCYY.';
 $helptxt['year_offset'] = 'Amount of years offset from current year for latest year you want to appear for a new vehicle.';
 $helptxt['vehicle_quota'] = 'This is the max limit of vehicles per user.  This can be overridden by assigning \'Exempt from Limits\' permissions.';
@@ -873,12 +655,12 @@ $helptxt['garage_management'] = '
     </ul>';]]></add>
         </operation>
     </file>
-      
-      <file name="$languagedir/Errors.english.php">        
+
+    <file name="$languagedir/Errors.english.php">
         <operation>
             <search position="end" />
             <add><![CDATA[
-            
+
 $txt['cannot_view_garage'] = 'You can\'t view the garage because you don\'t have permission to.';
 $txt['cannot_browse_vehicles'] = 'You are not allowed to browse vehicles.';
 $txt['cannot_view_vehicles'] = 'You cannot view vehicles based on your permissions.';
@@ -914,8 +696,8 @@ $txt['cannot_manage_garage_tools'] = 'You are not allowed to use garage tools.';
 $txt['cannot_manage_garage_tracks'] = 'You are not allowed to manage tracks.';
 $txt['cannot_manage_garage_other'] = 'You are not allowed to manage these settings.';
 
-$txt['garage_filesize_error'] = 'The file you are attempting to upload exceeds the maximum filesize of '.$smfgSettings['max_image_kbytes'].' kilobytes.  Please click back and select a file that meets the filesize restrictions.';
-$txt['garage_resolution_error'] = 'The image you are attempting to upload exceeds the maximum file resolution of '.$smfgSettings['max_image_resolution'].'x'.$smfgSettings['max_image_resolution'].'.  Please click back and select an image that meets the resolution restrictions or resize the image to meet them.';
+$txt['garage_filesize_error'] = 'The file you are attempting to upload exceeds the maximum filesize allowed.  Please click back and select a file that meets the filesize restrictions.';
+$txt['garage_resolution_error'] = 'The image you are attempting to upload exceeds the maximum file resolution allowed.  Please click back and select an image that meets the resolution restrictions or resize the image to meet them.';
 $txt['garage_no_image_supplied'] = 'You did not select an image, please go back and select an image before submitting.';
 $txt['garage_video_unsupported'] = 'The video you are attempting to upload is not a supported video site.  Please use a video sharing site listed on the supported sites list.';
 $txt['garage_video_title_required'] = 'You have submitted a video with no title, a title is required if you wish to submit a video.';
@@ -947,7 +729,7 @@ $txt['garage_no_dynorun'] = 'Dynorun does not exist.';
 $txt['garage_no_laptime'] = 'Laptime does not exist.';
 $txt['garage_no_track'] = 'Track does not exist.';]]></add>
         </operation>
-             
+
         <operation>
             <search position="after"><![CDATA[$txt['no_access'] = 'You are not allowed to access this section';]]></search>
             <add><![CDATA[
@@ -956,12 +738,12 @@ global $smfgSettings;
 ]]></add>
         </operation>
     </file>
-      
-      <file name="$languagedir/Who.english.php">        
+
+    <file name="$languagedir/Who.english.php">
         <operation>
             <search position="end" />
             <add><![CDATA[
-            
+
 $txt['whoall_garage'] = 'Viewing the <a href="' . $scripturl . '?action=garage">Garage</a>.';
 $txt['whoall_garage_user_garage'] = 'Viewing own <a href="' . $scripturl . '?action=garage">garage</a>.';
 $txt['whoall_garage_view_own_vehicle'] = 'Viewing own <a href="' . $scripturl . '?action=garage;sa=view_vehicle;VID=%d">vehicle</a>.';
@@ -1002,111 +784,8 @@ $txt['whoall_garage_add_insurance'] = 'Adding a new premium to <a href="' . $scr
 $txt['whoall_garage_add_modification'] = 'Adding a new modification to <a href="' . $scripturl . '?action=garage;sa=view_vehicle;VID=%d">%s<a/>.';]]></add>
         </operation>
     </file>
-      
-      <file name="$sourcedir/Who.php">        
-        <operation>
-            <search position="before"><![CDATA[$board_ids = array();]]></search>
-            <add><![CDATA[
-	$garage_ids = array();]]></add>
-        </operation>
 
-        <operation>
-            <search position="after"><![CDATA[// A subaction anyone can view... if the language string is there, show it.]]></search>
-            <add><![CDATA[elseif ($actions['action'] == 'garage' && !empty($actions['sa']))
-			{
-                $data[$k] = $txt['who_hidden'];
-                if (!empty($actions['MID']) && !empty($actions['VID']))
-                        $garage_ids['MID'][(int) $actions['MID']][$k] = $txt['whoall_' . $actions['action'] . '_' . $actions['sa']];
-                else if (!empty($actions['DID']) && !empty($actions['VID']))
-                        $garage_ids['DID'][(int) $actions['DID']][$k] = $txt['whoall_' . $actions['action'] . '_' . $actions['sa']];
-                else if (!empty($actions['LID']) && !empty($actions['VID']))
-                        $garage_ids['LID'][(int) $actions['LID']][$k] = $txt['whoall_' . $actions['action'] . '_' . $actions['sa']];
-                else if (!empty($actions['QID']) && !empty($actions['VID']))
-                        $garage_ids['QID'][(int) $actions['QID']][$k] = $txt['whoall_' . $actions['action'] . '_' . $actions['sa']];
-                else if (!empty($actions['BID']) && !empty($actions['VID']))
-                        $garage_ids['VID'][(int) $actions['VID']][$k] = $txt['whoall_' . $actions['action'] . '_' . $actions['sa']];
-                else if (!empty($actions['INS_ID']) && !empty($actions['VID']))
-                        $garage_ids['VID'][(int) $actions['VID']][$k] = $txt['whoall_' . $actions['action'] . '_' . $actions['sa']];
-                else if (!empty($actions['SID']) && !empty($actions['VID']))
-                        $garage_ids['VID'][(int) $actions['VID']][$k] = $txt['whoall_' . $actions['action'] . '_' . $actions['sa']];
-                else if (!empty($actions['CID']) && !empty($actions['VID']))
-                        $garage_ids['VID'][(int) $actions['VID']][$k] = $txt['whoall_' . $actions['action'] . '_' . $actions['sa']];
-                else if (!empty($actions['BID']) && empty($actions['VID']))
-                        $garage_ids['BID'][(int) $actions['BID']][$k] = $txt['whoall_' . $actions['action'] . '_' . $actions['sa']];
-                else if (!empty($actions['VID']))
-                        $garage_ids['VID'][(int) $actions['VID']][$k] = $txt['whoall_' . $actions['action'] . '_' . $actions['sa']];
-				else
-                        $data[$k] = $txt['whoall_garage_unknown'];
-            }
-            elseif ($actions['action'] == 'garagemanagement' || $actions['action'] == 'garagesettings')
-            {
-                    $data[$k] = $txt['whoall_' . $actions['action']];
-            }
-			]]></add>
-        </operation>
-
-        <operation>
-            <search position="after"><![CDATA[// Load member names for the profile.]]></search>
-            <add><![CDATA[// Load garage info.
-    if (!empty($garage_ids))
-    {
-		foreach ($garage_ids as $type => $ids)
-		{
-			if (!empty($ids))
-			{
-				$ints = 1;
-				switch ($type)
-				{
-	                                    // vehicles
-					case 'VID':
-						$query = "SELECT v.id AS id, CONCAT_WS( ' ', v.made_year, mk.make, md.model) AS description FROM {db_prefix}garage_vehicles AS v, {db_prefix}garage_makes AS mk, {db_prefix}garage_models AS md WHERE v.id IN (" . implode(', ', array_keys($ids)) .") AND v.make_id = mk.id AND v.model_id = md.id LIMIT " . count($ids);
-						break;
-	                                    // mods
-					case 'MID':
-						$query = "SELECT m.vehicle_id AS vid, m.id AS id, p.title AS description FROM {db_prefix}garage_products AS p, {db_prefix}garage_modifications AS m WHERE m.id IN (" . implode(', ', array_keys($ids)) . ") AND m.product_id = p.id LIMIT " . count($ids);
-						$ints = 2;
-						break;
-	                                    // laptimes
-					case 'LID':
-						$query = "SELECT l.vehicle_id AS vid, l.id AS id, t.title AS description FROM {db_prefix}garage_laps AS l, {db_prefix}garage_tracks AS t WHERE l.id IN (" . implode(', ', array_keys($ids)) . ") AND t.id = l.track_id LIMIT " . count($ids);
-						$ints = 2;
-						break;
-	                                    // dynoruns
-					case 'DID':
-						$query = "SELECT d.vehicle_id AS vid, d.id AS id, CONCAT_WS( ' ', d.bhp, d.bhp_unit, '/', d.torque, d.torque_unit, '/', d.nitrous) AS description FROM {db_prefix}garage_dynoruns AS d WHERE d.id IN (" . implode(', ', array_keys($ids)) . ") LIMIT " . count($ids);
-						$ints = 2;
-						break;
-	                                    // quartermiles
-					case 'QID':
-						$query = "SELECT q.vehicle_id AS vid, q.id AS id, CONCAT_WS( ' ', q.quart, q.quartmph) AS description FROM {db_prefix}garage_quartermiles AS q WHERE q.id IN (" . implode(', ', array_keys($ids)) . ") LIMIT " . count($ids);
-						$ints = 2;
-						break;
-	                                    // businesses
-					case 'BID':
-						$query = "SELECT b.id AS id, b.title AS description FROM {db_prefix}garage_business AS b WHERE b.id IN (" . implode(', ', array_keys($ids)) . ") LIMIT " . count($ids);
-						break;
-				}
-	
-				$result = $smcFunc['db_query']('', $query);
-	    		while ($row = $smcFunc['db_fetch_assoc']($result))
-	    		{
-	            		// Put the names and ids into the string...
-	            		foreach ($ids[$row['id']] as $k => $session_text)
-	                    		if ($ints == 2)
-	                    			$data[$k] = sprintf($session_text, $row['vid'], $row['id'], $row['description']);
-	                    		else
-	                    			$data[$k] = sprintf($session_text, $row['id'], $row['description']);
-	    		}
-	    		$smcFunc['db_free_result']($result);
-			}
-		}
-    }
-
-	]]></add>
-        </operation>
-    </file>
-
-      <file name="$languagedir/ManagePermissions.english.php">        
+    <file name="$languagedir/ManagePermissions.english.php">
         <operation>
             <search position="end" />
             <add><![CDATA[
@@ -1193,33 +872,5 @@ $txt['permissionname_limit_exemption'] = 'Exempt from Limits';
 $txt['permissionhelp_limit_exemption'] = 'This permissions allows a user to be exempt from gallery or vehicle limits.';]]></add>
         </operation>
     </file>
-    
-    <file name="$themedir/css/index.css">
-        <operation>
-            <search position="before"><![CDATA[.windowbg3
-{
-	color: #000;
-	background-color: #cacdd3;
-}]]></search>
-            <add><![CDATA[
-/* Responsive rules for small screens */
-@media screen and (min-width: 240px) and (max-width: 640px) {
 
-    /* Responsive Curve menu icon */
-    .responsive_menu.garage {
-        background: url(../images/garage.png) no-repeat;
-        height: 16px;
-        width: 16px;
-        display: inline-block;
-    }
-}
-
-.windowbg_pending
-{
-    color: #000;
-    background-color: #eeb4b4;
-}]]></add>
-        </operation>
-    </file>  
-    
 </modification>

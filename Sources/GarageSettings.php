@@ -4,9 +4,10 @@
  ***********************************************************************************
  * SMF Garage: Simple Machines Forum Garage (MOD)                                  *
  * =============================================================================== *
- * Software Version:           SMF Garage 2.3                                      *
- * Install for:                2.0.9-2.0.99                                        *
+ * Software Version:           SMF Garage 3.0.0                                    *
+ * Install for:                2.0.9-2.0.99, 2.1.0-2.1.99                         *
  * Original Developer:         RRasco (http://www.smfgarage.com)                   *
+ * Copyright 2026 by:          vbgamer45 (https://www.smfhacks.com)               *
  * Copyright 2015 by:          Bruno Alves (margarett.pt@gmail.com                 *
  * Copyright 2007-2011 by:     SMF Garage (http://www.smfgarage.com)               *
  *                             RRasco (rrasco@smfgarage.com)                       *
@@ -1016,7 +1017,7 @@ function IndexSettings()
         $context['two'] = "";
     }
 
-    if ($smfgSettings['featured_vehicle_from_block'] == 0 | "") {
+    if ($smfgSettings['featured_vehicle_from_block'] == 0 || $smfgSettings['featured_vehicle_from_block'] === "") {
         $context['fb_none'] = ' selected="selected"';
     } else {
         if ($smfgSettings['featured_vehicle_from_block'] == 1) {

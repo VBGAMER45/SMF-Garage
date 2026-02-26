@@ -4,9 +4,10 @@
  ***********************************************************************************
  * SMF Garage: Simple Machines Forum Garage (MOD)                                  *
  * =============================================================================== *
- * Software Version:           SMF Garage 2.3                                      *
- * Install for:                2.0.9-2.0.99                                        *
+ * Software Version:           SMF Garage 3.0.0                                    *
+ * Install for:                2.0.9-2.0.99, 2.1.0-2.1.99                         *
  * Original Developer:         RRasco (http://www.smfgarage.com)                   *
+ * Copyright 2026 by:          vbgamer45 (https://www.smfhacks.com)               *
  * Copyright 2015 by:          Bruno Alves (margarett.pt@gmail.com                 *
  * Copyright 2007-2011 by:     SMF Garage (http://www.smfgarage.com)               *
  *                             RRasco (rrasco@smfgarage.com)                       *
@@ -130,7 +131,7 @@ function template_manage_business()
                 <input type="text" name="garage" value="" maxlength="255" />
                 <input type="hidden" name="sc" value="' . $context['session_id'] . '" />
                 <input name="addgarage" type="submit" value="' . $txt['smfg_create_business'] . '" />
-                <script language="JavaScript" type="text/javascript">
+                <script type="text/javascript">
                  var frmvalidator = new Validator("add_garage");
                  var frm = document.forms["add_garage"];
                  
@@ -224,7 +225,7 @@ function template_manage_business()
                 <input type="text" name="shop" value="" maxlength="255" />
                 <input type="hidden" name="sc" value="' . $context['session_id'] . '" />
                 <input name="addshop" type="submit" value="' . $txt['smfg_create_business'] . '" />
-                <script language="JavaScript" type="text/javascript">
+                <script type="text/javascript">
                  var frmvalidator = new Validator("add_shop");
                  var frm = document.forms["add_shop"];
                  
@@ -318,7 +319,7 @@ function template_manage_business()
                 <input type="text" name="insurance" value="" maxlength="255" />
                 <input type="hidden" name="sc" value="' . $context['session_id'] . '" />
                 <input name="addinsurance" type="submit" value="' . $txt['smfg_create_business'] . '" />
-                <script language="JavaScript" type="text/javascript">
+                <script type="text/javascript">
                  var frmvalidator = new Validator("add_insurance");
                  var frm = document.forms["add_insurance"];
                  
@@ -412,7 +413,7 @@ function template_manage_business()
                 <input type="text" name="dynocenter" value="" maxlength="255" />
                 <input type="hidden" name="sc" value="' . $context['session_id'] . '" />
                 <input name="adddynocenter" type="submit" value="' . $txt['smfg_create_business'] . '" />
-                <script language="JavaScript" type="text/javascript">
+                <script type="text/javascript">
                  var frmvalidator = new Validator("add_dynocenter");
                  var frm = document.forms["add_dynocenter"];
                  
@@ -506,7 +507,7 @@ function template_manage_business()
                 <input type="text" name="manufacturer" value="" maxlength="255" />
                 <input type="hidden" name="sc" value="' . $context['session_id'] . '" />
                 <input name="addmanufacturer" type="submit" value="' . $txt['smfg_create_business'] . '" />
-                <script language="JavaScript" type="text/javascript">
+                <script type="text/javascript">
                  var frmvalidator = new Validator("add_manufacturer");
                  var frm = document.forms["add_manufacturer"];
                  
@@ -644,7 +645,7 @@ function template_add_business()
     </div>';
 
     echo '
-    <script language="JavaScript" type="text/javascript">
+    <script type="text/javascript">
     function DoCustomValidation()
                 {
                   var frm = document.forms["add_business"];
@@ -762,7 +763,7 @@ function template_edit_business()
     </div>';
 
     echo '
-    <script language="JavaScript" type="text/javascript">
+    <script type="text/javascript">
     function DoCustomValidation()
                 {
                   var frm = document.forms["edit_business"];
@@ -877,7 +878,7 @@ function template_manage_categories()
             <input type="text" name="category" value="" maxlength="255" />
             <input type="hidden" name="sc" value="' . $context['session_id'] . '" />
             <input name="addcategory" type="submit" value="' . $txt['smfg_create_category'] . '" />
-            <script language="JavaScript" type="text/javascript">
+            <script type="text/javascript">
              var frmvalidator = new Validator("category_add");
              var frm = document.forms["category_add"];
              
@@ -929,7 +930,7 @@ function template_edit_categories()
     </div>';
 
     echo '
-    <script language="JavaScript" type="text/javascript">
+    <script type="text/javascript">
     var frmvalidator = new Validator("edit_category");
     
     frmvalidator.addValidation("title","req","' . $txt['smfg_val_enter_category'] . '");
@@ -942,7 +943,7 @@ function template_manage_makes_models()
     global $context, $settings, $options, $scripturl, $txt;
 
     echo '
-    <script language="JavaScript" type="text/javascript">
+    <script type="text/javascript">
     var active_model_id = \'000\';
     </script>';
 
@@ -989,7 +990,7 @@ function template_manage_makes_models()
                 <input type="text" name="make" value="" maxlength="255" />
                 <input type="hidden" name="sc" value="' . $context['session_id'] . '" />
                 <input name="addmake" type="submit" value="' . $txt['smfg_create_make'] . '" />
-                <script language="JavaScript" type="text/javascript">
+                <script type="text/javascript">
                  var frmvalidator = new Validator("make_add");
                  var frm = document.forms["make_add"];
                  
@@ -1063,7 +1064,7 @@ function template_manage_makes_models()
                 <input type="text" name="make" value="" maxlength="255" />
                 <input type="hidden" name="sc" value="' . $context['session_id'] . '" />
                 <input name="addmake" type="submit" value="' . $txt['smfg_create_make'] . '" />
-                <script language="JavaScript" type="text/javascript">
+                <script type="text/javascript">
                  var frmvalidator = new Validator("make_add2");
                  var frm = document.forms["make_add2"];
                  
@@ -1106,7 +1107,7 @@ function template_manage_makes_models()
                         <input type="text" name="model" value="" maxlength="255" />
                         <input type="hidden" name="sc" value="' . $context['session_id'] . '" />
                         <input name="addmodel" type="submit" value="' . $txt['smfg_create_model'] . '" />
-                        <script language="JavaScript" type="text/javascript">
+                        <script type="text/javascript">
                          var frmvalidator = new Validator("model_add");
                          var frm = document.forms["model_add"];
                          
@@ -1204,7 +1205,7 @@ function template_edit_make()
     </div>';
 
     echo '
-    <script language="JavaScript" type="text/javascript">
+    <script type="text/javascript">
     var frmvalidator = new Validator("edit_make");
     
     frmvalidator.addValidation("title","req","' . $txt['smfg_val_enter_make'] . '");
@@ -1264,7 +1265,7 @@ function template_edit_model()
     </div>';
 
     echo '
-    <script language="JavaScript" type="text/javascript">
+    <script type="text/javascript">
     var frmvalidator = new Validator("edit_model");
     frmvalidator.addValidation("make_id","req","' . $txt['smfg_val_select_make'] . '");
     frmvalidator.addValidation("make_id","dontselect=0","' . $txt['smfg_val_select_make'] . '");
@@ -1279,7 +1280,7 @@ function template_manage_products()
     global $context, $settings, $options, $scripturl, $txt;
 
     echo '
-    <script language="JavaScript" type="text/javascript">
+    <script type="text/javascript">
     var active_model_id = \'000\';
     </script>';
 
@@ -1310,7 +1311,7 @@ function template_manage_products()
                 <input type="text" name="product" value="" maxlength="255" />
                 <input type="hidden" name="sc" value="' . $context['session_id'] . '" />
                 <input name="addproduct" type="submit" value="' . $txt['smfg_create_product'] . '" />
-                <script language="JavaScript" type="text/javascript">
+                <script type="text/javascript">
                  var frmvalidator = new Validator("product_add");
                  var frm = document.forms["product_add"];
                  
@@ -1408,7 +1409,7 @@ function template_edit_product()
         </div>';
 
     echo '
-        <script language="JavaScript" type="text/javascript">
+        <script type="text/javascript">
         var frmvalidator = new Validator("edit_product");
         
         frmvalidator.addValidation("cid","req","' . $txt['smfg_val_select_category'] . '");
@@ -1482,7 +1483,7 @@ function template_add_product()
         </div>';
 
     echo '
-        <script language="JavaScript" type="text/javascript">
+        <script type="text/javascript">
         var frmvalidator = new Validator("product_add");
         
         frmvalidator.addValidation("cid","req","' . $txt['smfg_val_select_category'] . '");
@@ -1577,7 +1578,7 @@ function template_manage_tracks()
             <input type="text" name="track" value="" maxlength="255" />
             <input type="hidden" name="sc" value="' . $context['session_id'] . '" />
             <input name="addtrack" type="submit" value="' . $txt['smfg_create_track'] . '" />
-            <script language="JavaScript" type="text/javascript">
+            <script type="text/javascript">
              var frmvalidator = new Validator("track_add");
              var frm = document.forms["track_add"];
                      
@@ -1676,7 +1677,7 @@ function template_manage_tracks()
                 <input type="text" name="tc" value="" maxlength="255" />
                 <input type="hidden" name="sc" value="' . $context['session_id'] . '" />
                 <input name="addcondition" type="submit" value="' . $txt['smfg_create_track_condition'] . '" />
-                <script language="JavaScript" type="text/javascript">
+                <script type="text/javascript">
                  var frmvalidator = new Validator("condition_add");
                  var frm = document.forms["condition_add"];
                          
@@ -1775,7 +1776,7 @@ function template_manage_tracks()
                 <input type="text" name="lt" value="" maxlength="255" />
                 <input type="hidden" name="sc" value="' . $context['session_id'] . '" />
                 <input name="addlaptype" type="submit" value="' . $txt['smfg_create_lap_type'] . '" />
-                <script language="JavaScript" type="text/javascript">
+                <script type="text/javascript">
                  var frmvalidator = new Validator("laptype_add");
                  var frm = document.forms["laptype_add"];
                          
@@ -1847,7 +1848,7 @@ function template_add_track()
         </div>';
 
     echo '
-        <script language="JavaScript" type="text/javascript">
+        <script type="text/javascript">
         var frmvalidator = new Validator("track_add");
         frmvalidator.addValidation("title","req","' . $txt['smfg_val_enter_track'] . '");
         frmvalidator.addValidation("title","regexp=^[ A-Za-z0-9]{1,30}$","' . $txt['smfg_val_enter_valid_track'] . '");
@@ -1912,7 +1913,7 @@ function template_edit_track()
         </div>';
 
     echo '
-        <script language="JavaScript" type="text/javascript">
+        <script type="text/javascript">
         var frmvalidator = new Validator("edit_track");
         frmvalidator.addValidation("title","req","' . $txt['smfg_val_enter_track'] . '");
         frmvalidator.addValidation("title","regexp=^[ A-Za-z0-9]{1,30}$","' . $txt['smfg_val_enter_valid_track'] . '");
@@ -1959,7 +1960,7 @@ function template_edit_track_condition()
         </div>';
 
     echo '
-        <script language="JavaScript" type="text/javascript">
+        <script type="text/javascript">
         var frmvalidator = new Validator("edit_track_condition");
         frmvalidator.addValidation("title","req","' . $txt['smfg_val_enter_track_condition'] . '");
         </script>';
@@ -2005,7 +2006,7 @@ function template_edit_lap_type()
         </div>';
 
     echo '
-        <script language="JavaScript" type="text/javascript">
+        <script type="text/javascript">
         var frmvalidator = new Validator("edit_lap_type");
         frmvalidator.addValidation("title","req","' . $txt['smfg_val_enter_lap_type'] . '");
         </script>';
@@ -2101,7 +2102,7 @@ function template_other()
                 <input type="text" name="pt" value="" maxlength="255" />
                 <input type="hidden" name="sc" value="' . $context['session_id'] . '" />
                 <input name="addpremiumtype" type="submit" value="' . $txt['smfg_create_premium_type'] . '" />
-                <script language="JavaScript" type="text/javascript">
+                <script type="text/javascript">
                  var frmvalidator = new Validator("pt_add");
                  var frm = document.forms["pt_add"];
                          
@@ -2200,7 +2201,7 @@ function template_other()
                 <input type="text" name="et" value="" maxlength="255" />
                 <input type="hidden" name="sc" value="' . $context['session_id'] . '" />
                 <input name="addenginetype" type="submit" value="' . $txt['smfg_create_engine_type'] . '" />
-                <script language="JavaScript" type="text/javascript">
+                <script type="text/javascript">
                  var frmvalidator = new Validator("et_add");
                  var frm = document.forms["et_add"];
                          
@@ -2299,7 +2300,7 @@ function template_other()
                 <input type="text" name="st" value="" maxlength="255" />
                 <input type="hidden" name="sc" value="' . $context['session_id'] . '" />
                 <input name="addservicetype" type="submit" value="' . $txt['smfg_create_service_type'] . '" />
-                <script language="JavaScript" type="text/javascript">
+                <script type="text/javascript">
                  var frmvalidator = new Validator("st_add");
                  var frm = document.forms["st_add"];
                          
@@ -2398,7 +2399,7 @@ function template_other()
                 <input type="text" name="ct" value="" maxlength="255" />
                 <input type="hidden" name="sc" value="' . $context['session_id'] . '" />
                 <input name="addcurrencytype" type="submit" value="' . $txt['smfg_create_currency_type'] . '" />
-                <script language="JavaScript" type="text/javascript">
+                <script type="text/javascript">
                  var frmvalidator = new Validator("ct_add");
                  var frm = document.forms["ct_add"];
                          
@@ -2453,7 +2454,7 @@ function template_edit_premium_type()
         </div>';
 
     echo '
-        <script language="JavaScript" type="text/javascript">
+        <script type="text/javascript">
         var frmvalidator = new Validator("edit_premium_type");
         frmvalidator.addValidation("title","req","' . $txt['smfg_val_enter_premium_type'] . '");
         </script>';
@@ -2499,7 +2500,7 @@ function template_edit_engine_type()
     </div>';
 
     echo '
-    <script language="JavaScript" type="text/javascript">
+    <script type="text/javascript">
     var frmvalidator = new Validator("edit_engine_type");
     frmvalidator.addValidation("title","req","' . $txt['smfg_val_enter_engine_type'] . '");
     </script>';
@@ -2545,7 +2546,7 @@ function template_edit_service_type()
         </div>';
 
     echo '
-        <script language="JavaScript" type="text/javascript">
+        <script type="text/javascript">
         var frmvalidator = new Validator("edit_service_type");
         frmvalidator.addValidation("title","req","' . $txt['smfg_val_enter_service_type'] . '");
         </script>';
@@ -2591,7 +2592,7 @@ function template_edit_currency_type()
         </div>';
 
     echo '
-        <script language="JavaScript" type="text/javascript">
+        <script type="text/javascript">
         var frmvalidator = new Validator("edit_currency_type");
         frmvalidator.addValidation("title","req","' . $txt['smfg_val_enter_currency_type'] . '");
         </script>';
@@ -2757,7 +2758,7 @@ function template_orphan_results()
     global $totalcount, $missingcount, $regencount, $missing;
 
     echo '
-        <script type="text/javascript" language="JavaScript">
+        <script type="text/javascript">
         function checkUncheckAll(theElement) 
         {
             var theForm = theElement.form, z = 0;

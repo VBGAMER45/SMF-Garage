@@ -4,9 +4,10 @@
  ***********************************************************************************
  * SMF Garage: Simple Machines Forum Garage (MOD)                                  *
  * =============================================================================== *
- * Software Version:           SMF Garage 2.3                                      *
- * Install for:                2.0.9-2.0.99                                        *
+ * Software Version:           SMF Garage 3.0.0                                    *
+ * Install for:                2.0.9-2.0.99, 2.1.0-2.1.99                         *
  * Original Developer:         RRasco (http://www.smfgarage.com)                   *
+ * Copyright 2026 by:          vbgamer45 (https://www.smfhacks.com)               *
  * Copyright 2015 by:          Bruno Alves (margarett.pt@gmail.com                 *
  * Copyright 2007-2011 by:     SMF Garage (http://www.smfgarage.com)               *
  *                             RRasco (rrasco@smfgarage.com)                       *
@@ -997,7 +998,7 @@ function ssi_smfg_mostSpent($title = 1, $limit = 5, $output_method = 'echo')
                     AND mk.pending != "1"
                     AND md.pending != "1"
                     AND v.pending != "1"
-                    GROUP BY total_spent
+                    GROUP BY v.id, IFNULL(m.total_mods,0) + IFNULL(s.total_service,0)
                     ORDER BY total_spent DESC
                     LIMIT 0, ' . $limit,
         array(// no values

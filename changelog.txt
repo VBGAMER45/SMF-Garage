@@ -3,9 +3,10 @@
 ***********************************************************************************
 * SMF Garage: Simple Machines Forum Garage (MOD)                                  *
 * =============================================================================== *
-* Software Version:           SMF Garage 2.3                                      *
-* Install for:                2.0.9-2.0.99                                        *
+* Software Version:           SMF Garage 3.0.0                                    *
+* Install for:                2.0.9-2.0.99, 2.1.0-2.1.99                         *
 * Original Developer:         RRasco (http://www.smfgarage.com)                   *
+* Copyright 2026 by:          vbgamer45 (https://www.smfhacks.com)               *
 * Copyright 2015 by:          Bruno Alves (margarett.pt@gmail.com                 *
 * Copyright 2007-2011 by:     SMF Garage (http://www.smfgarage.com)               *
 *                             RRasco (rrasco@smfgarage.com)                       *
@@ -16,6 +17,34 @@
 **********************************************************************************/
 *
 *    Changelog:
+*    2026 - Version 3.0.0
+*       - Added SMF 2.1.x compatibility
+*       - Hook-based integration for SMF 2.1 via dohooks.php + GarageHooks.php
+*         (replaces file edits for: actions, admin areas, menu buttons, permissions,
+*          heavy permissions, and Who's Online)
+*       - Added famfamfam silk car icon for garage main menu button
+*       - Fixed $smcFunc case bug in Who.php integration
+*       - Fixed XSS vulnerabilities in select/option generator functions
+*       - Removed duplicate CSRF-vulnerable notification update block
+*       - Added safety comments for disableQueryCheck pattern
+*       - Use loadCSSFile()/loadJavascriptFile() for SMF 2.1 CSS/JS loading
+*       - Eliminated disableQueryCheck for SMF 2.1 (uses per-member vehicle lookup)
+*       - Skip bundled jQuery 1.6.1 on SMF 2.1 (uses built-in jQuery 3.x)
+*       - Updated admin menu icons for SMF 2.1 (no .gif suffix)
+*       - Updated constructPageIndex patch for SMF 2.1 signature
+*       - Added error="skip" for patches that may not match in SMF 2.1
+*       - Fixed PHP 8+ "Unsupported operand types" errors (bitwise OR used instead of logical OR)
+*       - Fixed MySQL ONLY_FULL_GROUP_BY errors across Garage.php, GarageFunctions.php, SSI_Garage.php
+*       - Fixed $smfgSettings['version'] null access error in language files
+*       - Updated remote image URL inputs to default to https:// instead of http://
+*       - Updated remote image URL validation to accept both https:// and http://
+*       - Modernized displayVideo() function: removed all dead Flash-based video sites,
+*         added modern iframe embeds for YouTube, Vimeo, Dailymotion, Facebook, Twitch,
+*         TikTok, Streamable, Rumble, Instagram, Odysee, Bitchute, ItemFix, and direct
+*         MP4/WEBM via HTML5 video tag
+*       - Updated install version to 3.0.0
+*       - Bumped version to 3.0.0
+*
 *    29/01/2015 - Version 2.3
 *       - Removed support for SMF 1.1.x
 *       - Removed upgrade options from ancient versions

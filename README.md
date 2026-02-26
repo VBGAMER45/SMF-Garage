@@ -1,12 +1,12 @@
 # SMF Garage mod
-This is an updated and improved version of the original SMF Garage mod by RRasco https://github.com/rrasco09/smfgarage    
+This is an updated and improved version of the original SMF Garage mod by RRasco https://github.com/rrasco09/smfgarage
 * **Original author:** RRasco http://www.smfgarage.com
 * **Additional author:** Bruno Alves https://github.com/margarett
 * **Additional author:** digger https://mysmf.ru
+* **Additional author:** vbgamer45 https://www.smfhacks.com
 * **License:** The BSD 3-Clause License
-* **Compatible with:** SMF 2.0
+* **Compatible with:** SMF 2.0, SMF 2.1
 * **Languages:** English
-* **Demo:** http://garage.mysmf.net
 
 ![smfg2-screenshot](https://cloud.githubusercontent.com/assets/1187218/23567629/a35e97d0-0070-11e7-8f71-df08ad69ee23.png)
 
@@ -18,14 +18,5 @@ Each vehicle profile is capable of maintaining vehicle details, images, videos, 
 
 In addition to vehicle profiles, SMF Garage is also capable of storing business profiles to help track the history of a vehicle. Retail shops, repair garages, manufacturers, and insurance agencies can all be stored and associated with vehicle profiles
 
-This mod works with SMF 2.0.x only. If you need version for SMF 1.1 you should use original version https://github.com/rrasco09/smfgarage
+This mod works with SMF 2.0.x and SMF 2.1.x. If you need version for SMF 1.1 you should use original version https://github.com/rrasco09/smfgarage
 
-## Описание
-
-SMF Garage - это система управления профилями транспортных средств (ТС) для SMF. Расширение добавляет возможность создавать профили своих транспортных средств, связанных с учетной записью пользователя на форуме.
-
-Каждый профиль включает в себя конфигурацию ТС, фото, видео, модификации, страховки, пробег, историю техобслуживания и другие подробности.
-
-В дополнение к профилям ТС, SMF Garage способен хранить бизнес-профили, чтобы помочь отслеживать историю автомобиля. Можно хранить информацию о розничных магазинах, ремонтных мастерских, производителях и страховых агентствах и связывать их с профилями ТС.
-
-Этот мод только для SMF 2.0.x. Если вам нужна версия для SMF 1.1 используйте оригинальную версию https://github.com/rrasco09/smfgarage

@@ -4,9 +4,10 @@
  ***********************************************************************************
  * SMF Garage: Simple Machines Forum Garage (MOD)                                  *
  * =============================================================================== *
- * Software Version:           SMF Garage 2.3                                      *
- * Install for:                2.0.9-2.0.99                                        *
+ * Software Version:           SMF Garage 3.0.0                                    *
+ * Install for:                2.0.9-2.0.99, 2.1.0-2.1.99                         *
  * Original Developer:         RRasco (http://www.smfgarage.com)                   *
+ * Copyright 2026 by:          vbgamer45 (https://www.smfhacks.com)               *
  * Copyright 2015 by:          Bruno Alves (margarett.pt@gmail.com                 *
  * Copyright 2007-2011 by:     SMF Garage (http://www.smfgarage.com)               *
  *                             RRasco (rrasco@smfgarage.com)                       *
@@ -41,6 +42,18 @@ function Garage()
     // This is gonna be needed...
     loadTemplate('Garage', 'garage');
     loadLanguage('Garage');
+
+    // SMF 2.1: Load CSS/JS via API instead of template injection
+    if (defined('SMF_VERSION') && version_compare(SMF_VERSION, '2.1', '>='))
+    {
+        // SMF 2.1 already includes jQuery 3.x, so don't load bundled jQuery 1.6.1
+        loadJavascriptFile('jquery.preload.min.js', array('default_theme' => true));
+        loadJavascriptFile('jquery.tipTip.minified.js', array('default_theme' => true));
+        loadJavascriptFile('jquery.jeditable.mini.js', array('default_theme' => true));
+        loadJavascriptFile('jquery-smfg.js', array('default_theme' => true));
+        loadJavascriptFile('garage_functions.js', array('default_theme' => true));
+        loadCSSFile('smfg_tips.css', array('default_theme' => true));
+    }
 
     // Set our index includes
     $context['smfg_ajax'] = 0;
@@ -251,6 +264,27 @@ function Garage()
         $g_subActions[$context['garage_sa']][1]();
     } else {
         $g_subActions['main'][1]();
+    }
+
+    // SMF 2.1: Load conditional CSS/JS after sub-action sets context flags
+    if (defined('SMF_VERSION') && version_compare(SMF_VERSION, '2.1', '>='))
+    {
+        if (!empty($smfgSettings['enable_lightbox']) && !empty($context['lightbox']))
+        {
+            loadCSSFile('shadowbox.css', array('default_theme' => true));
+            loadJavascriptFile('shadowbox.js', array('default_theme' => true, 'subdir' => 'css'));
+            addInlineJavascript('Shadowbox.init();', true);
+        }
+        if (!empty($context['form_validation']))
+            loadJavascriptFile('gen_validatorv2.js', array('default_theme' => true));
+        if (!empty($context['dynamicoptionlist']))
+            loadJavascriptFile('dynamicoptionlist.js', array('default_theme' => true));
+        if (!empty($context['smfg_ajax']))
+        {
+            loadCSSFile('jquery-ui-1.8.13.custom.css', array('default_theme' => true));
+            loadJavascriptFile('jquery-ui-1.8.13.custom.min.js', array('default_theme' => true));
+            loadJavascriptFile('smfg_ajax.js', array('default_theme' => true));
+        }
     }
 
 }
@@ -698,7 +732,7 @@ function G_Main()
                 AND p.pending != "1"
                 AND b.pending != "1"
                 AND v.user_id = u.id_member
-                GROUP BY v.id
+                GROUP BY v.id, v.user_id, CONCAT_WS(" ", v.made_year, mk.make, md.model), u.real_name
                 ORDER BY total_mods DESC
                 LIMIT 0, {int:most_modified_limit}',
             array(
@@ -1103,7 +1137,7 @@ function G_Main()
                 AND md.pending != "1"
                 AND v.pending != "1"
                 AND v.user_id = u.id_member
-                GROUP BY vehicle_id
+                GROUP BY r.vehicle_id, v.user_id, CONCAT_WS(" ", v.made_year, mk.make, md.model), u.real_name
                 ORDER BY rating DESC
                 LIMIT 0, {int:top_rating_limit}',
             array(
@@ -1546,7 +1580,7 @@ function G_Main()
                     AND v.pending != "1"
                     AND v.user_id = u.id_member
                     AND v.currency = c.id
-                    GROUP BY total_spent
+                    GROUP BY v.id, v.user_id, CONCAT_WS(" ", v.made_year, mk.make, md.model), u.real_name, c.title, IFNULL(m.total_mods,0) + IFNULL(s.total_service,0)
                     ORDER BY total_spent DESC
                     LIMIT 0, {int:most_spent_limit}',
             array(
@@ -2841,7 +2875,7 @@ function G_Insert_Vehicle()
 
         } // Check if a remote image was supplied...then use it
         else {
-            if ($_POST['url_image'] > 'http://') {
+            if ($_POST['url_image'] !== 'http://' && $_POST['url_image'] !== 'https://') {
 
                 // Check for maximum image resolution
                 $dimensions = getimagesize_remote($_POST['url_image']) or die('Could not obtain remote image dimensions.');
@@ -2918,7 +2952,7 @@ function G_Insert_Vehicle()
     }
 
     // If modification images are disabled or no image was provided, we still need to insert the data
-    if (!$smfgSettings['enable_vehicle_images'] | $_FILES['FILE_UPLOAD']['error'] == 4 && $_POST['url_image'] <= 'http://') {
+    if (!$smfgSettings['enable_vehicle_images'] || $_FILES['FILE_UPLOAD']['error'] == 4 && ($_POST['url_image'] === 'http://' || $_POST['url_image'] === 'https://')) {
 
         // Insert vehicle
         $request = $smcFunc['db_insert']('insert',
@@ -3461,7 +3495,7 @@ function G_View_Vehicle()
                         AND b1.pending != "1"
                 GROUP BY vehicle_id) AS s ON v.id = s.vehicle_id
         WHERE v.id = {int:vid}
-        GROUP BY total_spent
+        GROUP BY v.id, IFNULL(m.total_mods,0) + IFNULL(s.total_service,0)
         ORDER BY total_spent DESC
         LIMIT 1',
         array(
@@ -5312,7 +5346,7 @@ function G_Insert_Modification()
 
         } // Check if a remote image was supplied...then use it
         else {
-            if ($_POST['url_image'] > 'http://') {
+            if ($_POST['url_image'] !== 'http://' && $_POST['url_image'] !== 'https://') {
 
                 // Check for maximum image resolution
                 $dimensions = getimagesize_remote($_POST['url_image']) or die('Could not obtain remote image dimensions.');
@@ -5395,7 +5429,7 @@ function G_Insert_Modification()
     }
 
     // If modification images are disabled or no image was provided, we still need to insert the data
-    if ($smfgSettings['enable_modification_images'] != 1 | $_FILES['FILE_UPLOAD']['error'] == 4 && $_POST['url_image'] <= 'http://') {
+    if ($smfgSettings['enable_modification_images'] != 1 || $_FILES['FILE_UPLOAD']['error'] == 4 && ($_POST['url_image'] === 'http://' || $_POST['url_image'] === 'https://')) {
 
         // Insert modification
         $request = $smcFunc['db_insert']('',
@@ -6521,7 +6555,7 @@ function G_Insert_Quartermile()
 
         } // Check if a remote image was supplied...then use it
         else {
-            if ($_POST['url_image'] > 'http://') {
+            if ($_POST['url_image'] !== 'http://' && $_POST['url_image'] !== 'https://') {
 
                 // Check for maximum image resolution
                 $dimensions = getimagesize_remote($_POST['url_image']) or die('Could not obtain remote image dimensions.');
@@ -6596,7 +6630,7 @@ function G_Insert_Quartermile()
     }
 
     // If modification images are disabled or no image was provided, we still need to insert the data
-    if ($smfgSettings['enable_quartermile_images'] != 1 | $_FILES['FILE_UPLOAD']['error'] == 4 && $_POST['url_image'] <= 'http://') {
+    if ($smfgSettings['enable_quartermile_images'] != 1 || $_FILES['FILE_UPLOAD']['error'] == 4 && ($_POST['url_image'] === 'http://' || $_POST['url_image'] === 'https://')) {
 
         if ($smfgSettings['enable_quartermile_image_required']) {
             loadLanguage('Errors');
@@ -7214,7 +7248,7 @@ function G_Insert_Dynorun()
 
         } // Check if a remote image was supplied...then use it
         else {
-            if ($_POST['url_image'] > 'http://') {
+            if ($_POST['url_image'] !== 'http://' && $_POST['url_image'] !== 'https://') {
 
                 // Check for maximum image resolution
                 $dimensions = getimagesize_remote($_POST['url_image']) or die('Could not obtain remote image dimensions.');
@@ -7289,7 +7323,7 @@ function G_Insert_Dynorun()
     }
 
     // If dynorun images are disabled or no image was provided, we still need to insert the data
-    if ($smfgSettings['enable_dynorun_images'] != 1 | $_FILES['FILE_UPLOAD']['error'] == 4 && $_POST['url_image'] <= 'http://') {
+    if ($smfgSettings['enable_dynorun_images'] != 1 || $_FILES['FILE_UPLOAD']['error'] == 4 && ($_POST['url_image'] === 'http://' || $_POST['url_image'] === 'https://')) {
 
         // Check if images are required
         if ($smfgSettings['enable_dynorun_image_required']) {
@@ -7970,7 +8004,7 @@ function G_Insert_Laptime()
 
         } // Check if a remote image was supplied...then use it
         else {
-            if ($_POST['url_image'] > 'http://') {
+            if ($_POST['url_image'] !== 'http://' && $_POST['url_image'] !== 'https://') {
 
                 // Check for maximum image resolution
                 $dimensions = getimagesize_remote($_POST['url_image']) or die('Could not obtain remote image dimensions.');
@@ -8035,7 +8069,7 @@ function G_Insert_Laptime()
     }
 
     // If modification images are disabled or no image was provided, we still need to insert the data
-    if ($smfgSettings['enable_lap_images'] != 1 | $_FILES['FILE_UPLOAD']['error'] == 4 && $_POST['url_image'] <= 'http://') {
+    if ($smfgSettings['enable_lap_images'] != 1 || $_FILES['FILE_UPLOAD']['error'] == 4 && ($_POST['url_image'] === 'http://' || $_POST['url_image'] === 'https://')) {
 
         // Check if images are required
         if ($smfgSettings['enable_lap_image_required']) {
@@ -11720,7 +11754,7 @@ function G_Search_Results()
 
     // Assign any group by statements after joins if needed
     if ($_SESSION['smfg']['display_as'] == "vehicles") {
-        $group_by = "GROUP BY v.id";
+        $group_by = "GROUP BY v.id, v.made_year, mk.make, md.model, v.color, v.user_id, u.real_name, v.views, v.date_updated";
     } else {
         $group_by = "";
     }
@@ -12453,7 +12487,7 @@ function G_Insurance()
             FROM {db_prefix}garage_premium_types AS pt
             LEFT OUTER JOIN {db_prefix}garage_premiums AS p ON p.business_id = {int:bid}
                 AND p.cover_type_id = pt.id
-                GROUP BY pt.id
+                GROUP BY pt.id, pt.title
                 ORDER BY field_order ASC',
             array(
                 'bid' => $context['insurance'][$count]['bid'],
@@ -12564,7 +12598,7 @@ function G_Insurance_Review()
         FROM {db_prefix}garage_premium_types AS pt
         LEFT OUTER JOIN {db_prefix}garage_premiums AS p ON p.business_id = {int:bid}
             AND p.cover_type_id = pt.id
-            GROUP BY pt.id
+            GROUP BY pt.id, pt.title
             ORDER BY field_order ASC',
         array(
             'bid' => $context['insurance']['bid'],
@@ -13631,7 +13665,7 @@ function G_Insert_Vehicle_Images()
 
         } // Check if a remote image was supplied...then use it
         else {
-            if ($_POST['url_image'] > 'http://') {
+            if ($_POST['url_image'] !== 'cahttp://' && $_POST['url_image'] !== 'https://') {
 
                 // Check for maximum image resolution
                 $dimensions = getimagesize_remote($_POST['url_image']);
@@ -13912,7 +13946,7 @@ function G_Insert_Modification_Images()
 
         } // Check if a remote image was supplied...then use it
         else {
-            if ($_POST['url_image'] > 'http://') {
+            if ($_POST['url_image'] !== 'http://' && $_POST['url_image'] !== 'https://') {
 
                 // Check for maximum image resolution
                 $dimensions = getimagesize_remote($_POST['url_image']) or die('Could not obtain remote image dimensions.');
@@ -14212,7 +14246,7 @@ function G_Insert_Quartermile_Images()
 
         } // Check if a remote image was supplied...then use it
         else {
-            if ($_POST['url_image'] > 'http://') {
+            if ($_POST['url_image'] !== 'http://' && $_POST['url_image'] !== 'https://') {
 
                 // Check for maximum image resolution
                 $dimensions = getimagesize_remote($_POST['url_image']) or die('Could not obtain remote image dimensions.');
@@ -14488,7 +14522,7 @@ function G_Insert_Dynorun_Images()
 
         } // Check if a remote image was supplied...then use it
         else {
-            if ($_POST['url_image'] > 'http://') {
+            if ($_POST['url_image'] !== 'http://' && $_POST['url_image'] !== 'https://') {
 
                 // Check for maximum image resolution
                 $dimensions = getimagesize_remote($_POST['url_image']);
@@ -14765,7 +14799,7 @@ function G_Insert_Laptime_Images()
 
         } // Check if a remote image was supplied...then use it
         else {
-            if ($_POST['url_image'] > 'http://') {
+            if ($_POST['url_image'] !== 'http://' && $_POST['url_image'] !== 'https://') {
 
                 // Check for maximum image resolution
                 $dimensions = getimagesize_remote($_POST['url_image']);
@@ -16961,7 +16995,7 @@ function G_Garage_Card()
             AND v.make_id = mk.id
             AND v.model_id = md.id
             AND v.currency = c.id
-        GROUP BY Vehicle',
+        GROUP BY v.id, u.member_name, CONCAT_WS(" ", v.made_year, mk.make, md.model), IFNULL(m.total_mods,0) + IFNULL(s.total_service,0) + IFNULL(v.price,0), c.title, IFNULL(m1.total_num_mods, 0), IFNULL(r.rating,0), IFNULL(r.poss_rating,0), g.attach_location, g.is_remote, g.attach_file',
         array(
             'ratingfunc' => $ratingfunc,
             'vid' => $VID,

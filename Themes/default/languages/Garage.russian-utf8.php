@@ -4,9 +4,10 @@
  ***********************************************************************************
  * SMF Garage: Simple Machines Forum Garage (MOD)                                  *
  * =============================================================================== *
- * Software Version:           SMF Garage 2.3                                      *
- * Install for:                2.0.9-2.0.99                                        *
+ * Software Version:           SMF Garage 3.0.0                                    *
+ * Install for:                2.0.9-2.0.99, 2.1.0-2.1.99                         *
  * Original Developer:         RRasco (http://www.smfgarage.com)                   *
+ * Copyright 2026 by:          vbgamer45 (https://www.smfhacks.com)               *
  * Copyright 2015 by:          Bruno Alves (margarett.pt@gmail.com                 *
  * Copyright 2007-2011 by:     SMF Garage (http://www.smfgarage.com)               *
  *                             RRasco (rrasco@smfgarage.com)                       *
@@ -914,9 +915,10 @@ $txt['smfg_gnu_license'] = '
 ***********************************************************************************
 * SMF Garage: Simple Machines Forum Garage (MOD)                                  *
 * =============================================================================== *
-* Software Version:           SMF Garage ' . $smfgSettings['version'] . '         *
+* Software Version:           SMF Garage ' . (!empty($smfgSettings['version']) ? $smfgSettings['version'] : '3.0.0') . '         *
 * Install for:                2.0.9-2.0.99                                        *
-* Original Developer:         RRasco (http://www.smfgarage.com)                   *
+* Original Developer:         RRasco (http://www.smfgarage.com)  
+* Copyright 2026 by:          vbgamer45 (https://www.smfhacks.com) 
 * Copyright 2015 by:          Bruno Alves (margarett.pt@gmail.com                 *
 * Copyright 2007-2011 by:     SMF Garage (http://www.smfgarage.com)               *
 *                             RRasco (rrasco@smfgarage.com)                       *
@@ -926,6 +928,7 @@ $txt['smfg_gnu_license'] = '
 *              http://www.opensource.org/licenses/BSD-3-Clause                    *
 **********************************************************************************/
 
+Copyright (c) 2026, vbgamer45
 Copyright (c) 2015, Bruno Alves
 Copyright (c) 2011, RRasco
 All rights reserved.

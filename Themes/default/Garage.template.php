@@ -4,9 +4,10 @@
  ***********************************************************************************
  * SMF Garage: Simple Machines Forum Garage (MOD)                                  *
  * =============================================================================== *
- * Software Version:           SMF Garage 2.3                                      *
- * Install for:                2.0.9-2.0.99                                        *
+ * Software Version:           SMF Garage 3.0.0                                    *
+ * Install for:                2.0.9-2.0.99, 2.1.0-2.1.99                         *
  * Original Developer:         RRasco (http://www.smfgarage.com)                   *
+ * Copyright 2026 by:          vbgamer45 (https://www.smfhacks.com)               *
  * Copyright 2015 by:          Bruno Alves (margarett.pt@gmail.com                 *
  * Copyright 2007-2011 by:     SMF Garage (http://www.smfgarage.com)               *
  *                             RRasco (rrasco@smfgarage.com)                       *
@@ -609,7 +610,7 @@ function template_view_garage()
     if ($context['user']['is_logged'] && allowedTo('post_comments')) {
 
         echo ' 
-        <script language="JavaScript" type="text/javascript">
+        <script type="text/javascript">
         var frmvalidator = new Validator("add_comment");
         frmvalidator.addValidation("post","req","Please enter a comment.");
         frmvalidator.addValidation("post","maxlen=2500","Max length for comments is 2500 characters.");
@@ -931,7 +932,7 @@ function template_view_vehicle()
                         </select>
                         <input type="hidden" value="' . $_GET['VID'] . '" name="VID" /><input type="hidden" value="' . $context['user']['id'] . '" name="user_id" /><input name="Rate" type="submit" value="' . $txt['smfg_rate'] . '" /><input type="hidden" name="sc" value="' . $context['session_id'] . '" />
                         </form>
-                        <script language="JavaScript" type="text/javascript">
+                        <script type="text/javascript">
                          var frmvalidator = new Validator("add_rating");
                          frmvalidator.addValidation("rating","req","' . $txt['smfg_val_select_rating'] . '");
                          frmvalidator.addValidation("rating","dontselect=0","' . $txt['smfg_val_select_rating'] . '");
@@ -1871,7 +1872,7 @@ function template_view_vehicle()
 
     if ($context['user_vehicles']['user_id'] == $context['user']['id'] || allowedTo('edit_all_vehicles')) {
         echo '
-        <script language="JavaScript" type="text/javascript">
+        <script type="text/javascript">
         var frmvalidator = new Validator("add_blog");
         
         frmvalidator.addValidation("blog_title","req","' . $txt['smfg_val_enter_blog_title'] . '");
@@ -2066,7 +2067,7 @@ function template_view_vehicle()
         echo $forms;
 
         echo ' 
-            <script language="JavaScript" type="text/javascript">
+            <script type="text/javascript">
             var frmvalidator = new Validator("add_comment");
             frmvalidator.addValidation("post","req","Please enter a comment.");
             frmvalidator.addValidation("post","maxlen=2500","Max length for comments is 2500 characters.");
@@ -2316,7 +2317,7 @@ function template_add_vehicle()
             echo '    
             <tr>
                 <td width="32%" align="right"><b>' . $txt['smfg_enter_remote_url'] . '</b></td>
-                <td><input name="url_image" type="text" size="40" maxlength="255" value="http://" /></td>
+                <td><input name="url_image" type="text" size="40" maxlength="255" value="https://" /></td>
             </tr>';
         }
 
@@ -2355,7 +2356,7 @@ function template_add_vehicle()
         </tr>
         <tr>
             <td width="32%" align="right" nowrap="nowrap"><b>' . $txt['smfg_video_url'] . '</b></td>
-            <td><input type="text"  size="40" maxlength="255" value="http://" name="video_url"/>&nbsp;<span class="smalltext"><a href="' . $scripturl . '?action=garage;sa=supported_video" rel="shadowbox;width=260;height=400" title="' . $txt['smfg_video_instructions'] . '">Supported Sites</a></span></td>
+            <td><input type="text"  size="40" maxlength="255" value="https://" name="video_url"/>&nbsp;<span class="smalltext"><a href="' . $scripturl . '?action=garage;sa=supported_video" rel="shadowbox;width=260;height=400" title="' . $txt['smfg_video_instructions'] . '">Supported Sites</a></span></td>
         </tr>';
 
         echo '    
@@ -2374,7 +2375,7 @@ function template_add_vehicle()
     </tr>
     </table>
     </form>
-<script language="JavaScript" type="text/javascript">
+<script type="text/javascript">
  var frmvalidator = new Validator("add_vehicle");
  var frm = document.forms["add_vehicle"];
  
@@ -2544,7 +2545,7 @@ function template_edit_vehicle()
 
     // List Model Options
     echo model_options("update_vehicle");
-    echo '<script language="JavaScript" type="text/javascript">dol.forField("model_id").setValues(' . $context['user_vehicles']['model_id'] . ');</script>';
+    echo '<script type="text/javascript">dol.forField("model_id").setValues(' . $context['user_vehicles']['model_id'] . ');</script>';
 
     echo '
 
@@ -2650,7 +2651,7 @@ function template_edit_vehicle()
                 </td>
             </tr>    
         </table>
-        <script language="JavaScript" type="text/javascript">
+        <script type="text/javascript">
          var frmvalidator = new Validator("update_vehicle");
          var frm = document.forms["update_vehicle"];
          
@@ -2732,7 +2733,7 @@ function template_edit_vehicle()
             echo '    
                         <tr>
                             <td width="32%" align="right"><b>' . $txt['smfg_enter_remote_url'] . '</b></td>
-                            <td><input name="url_image" type="text" size="40" maxlength="255" value="http://" /></td>
+                            <td><input name="url_image" type="text" size="40" maxlength="255" value="https://" /></td>
                         </tr>';
         }
 
@@ -2812,7 +2813,7 @@ function template_edit_vehicle()
                     </td>
                 </tr>
             </table>
-            <script language="JavaScript" type="text/javascript">
+            <script type="text/javascript">
              var frmvalidator = new Validator("update_images");
               
              frmvalidator.addValidation("attach_desc","maxlen=150","' . $txt['smfg_val_image_description_length'] . '");  
@@ -2870,7 +2871,7 @@ function template_edit_vehicle()
                         </tr>
                         <tr>
                             <td width="32%" align="right" nowrap="nowrap"><b>' . $txt['smfg_video_url'] . '</b></td>
-                            <td><input type="text"  size="40" maxlength="255" value="http://" name="video_url"/>&nbsp;<span class="smalltext"><a href="' . $scripturl . '?action=garage;sa=supported_video" rel="shadowbox;width=260;height=400" title="' . $txt['smfg_video_instructions'] . '">Supported Sites</a></span></td>
+                            <td><input type="text"  size="40" maxlength="255" value="https://" name="video_url"/>&nbsp;<span class="smalltext"><a href="' . $scripturl . '?action=garage;sa=supported_video" rel="shadowbox;width=260;height=400" title="' . $txt['smfg_video_instructions'] . '">Supported Sites</a></span></td>
                         </tr>';
 
         echo '    
@@ -2948,7 +2949,7 @@ function template_edit_vehicle()
                     </td>
                 </tr>
             </table>
-            <script language="JavaScript" type="text/javascript">
+            <script type="text/javascript">
              var frmvalidator = new Validator("update_video");
               
              frmvalidator.addValidation("video_desc","maxlen=150","' . $txt['smfg_val_video_description_length'] . '");  
@@ -3238,7 +3239,7 @@ function template_add_modification()
             echo '    
         <tr>
             <td width="32%" align="right"><b>' . $txt['smfg_enter_remote_url'] . '</b></td>
-            <td><input name="url_image" type="text" size="40" maxlength="255" value="http://" /></td>
+            <td><input name="url_image" type="text" size="40" maxlength="255" value="https://" /></td>
         </tr>';
         }
 
@@ -3263,7 +3264,7 @@ function template_add_modification()
         </tr>
         <tr>
             <td width="32%" align="right" nowrap="nowrap"><b>' . $txt['smfg_video_url'] . '</b></td>
-            <td ><input type="text"  size="40" maxlength="255" value="http://" name="video_url"/>&nbsp;<span class="smalltext"><a href="' . $scripturl . '?action=garage;sa=supported_video" rel="shadowbox;width=260;height=400" title="' . $txt['smfg_video_instructions'] . '">Supported Sites</a></span></td>
+            <td ><input type="text"  size="40" maxlength="255" value="https://" name="video_url"/>&nbsp;<span class="smalltext"><a href="' . $scripturl . '?action=garage;sa=supported_video" rel="shadowbox;width=260;height=400" title="' . $txt['smfg_video_instructions'] . '">Supported Sites</a></span></td>
         </tr>';
 
         echo '    
@@ -3288,7 +3289,7 @@ function template_add_modification()
     </form>';
 
     echo '
-    <script language="JavaScript" type="text/javascript">
+    <script type="text/javascript">
      var frmvalidator = new Validator("add_modification");
      var frm = document.forms["add_modification"];
      
@@ -3399,10 +3400,10 @@ function template_edit_modification()
     echo product_options("edit_modification");
 
     echo '
-    <script language="JavaScript" type="text/javascript">dol2.forField("manufacturer_id").setValues("' . $context['mods']['manufacturer_id'] . '");</script>';
+    <script type="text/javascript">dol2.forField("manufacturer_id").setValues("' . $context['mods']['manufacturer_id'] . '");</script>';
 
     echo '
-    <script language="JavaScript" type="text/javascript">dol2.forField("product_id").setValues("' . $context['mods']['product_id'] . '");</script>';
+    <script type="text/javascript">dol2.forField("product_id").setValues("' . $context['mods']['product_id'] . '");</script>';
 
     echo '                
     <div class="garage_panel" id="options000" style="display: none;">';
@@ -3623,7 +3624,7 @@ function template_edit_modification()
                 </tr>
             </table>
             </form>
-            <script language="JavaScript" type="text/javascript">
+            <script type="text/javascript">
             var frmvalidator = new Validator("edit_modification");
             var frm = document.forms["edit_modification"];
             
@@ -3706,7 +3707,7 @@ function template_edit_modification()
             echo '    
                         <tr>
                             <td width="32%" align="right"><b>' . $txt['smfg_enter_remote_url'] . '</b></td>
-                            <td><input name="url_image" type="text" size="40" maxlength="255" value="http://" /></td>
+                            <td><input name="url_image" type="text" size="40" maxlength="255" value="https://" /></td>
                         </tr>';
         }
 
@@ -3788,7 +3789,7 @@ function template_edit_modification()
                 </td>
             </tr>
         </table>
-        <script language="JavaScript" type="text/javascript">
+        <script type="text/javascript">
          var frmvalidator = new Validator("update_images");
         
          frmvalidator.addValidation("attach_desc","maxlen=150","' . $txt['smfg_val_image_description_length'] . '");         
@@ -3844,7 +3845,7 @@ function template_edit_modification()
                     </tr>
                     <tr>
                         <td width="32%" align="right" nowrap="nowrap"><b>' . $txt['smfg_video_url'] . '</b></td>
-                        <td><input type="text"  size="40" maxlength="255" value="http://" name="video_url"/>&nbsp;<span class="smalltext"><a href="' . $scripturl . '?action=garage;sa=supported_video" rel="shadowbox;width=260;height=400" title="' . $txt['smfg_video_instructions'] . '">Supported Sites</a></span></td>
+                        <td><input type="text"  size="40" maxlength="255" value="https://" name="video_url"/>&nbsp;<span class="smalltext"><a href="' . $scripturl . '?action=garage;sa=supported_video" rel="shadowbox;width=260;height=400" title="' . $txt['smfg_video_instructions'] . '">Supported Sites</a></span></td>
                     </tr>';
 
         echo '    
@@ -3922,7 +3923,7 @@ function template_edit_modification()
                 </td>
             </tr>
         </table>
-        <script language="JavaScript" type="text/javascript">
+        <script type="text/javascript">
          var frmvalidator = new Validator("update_video");
           
          frmvalidator.addValidation("video_desc","maxlen=150","' . $txt['smfg_val_video_description_length'] . '");
@@ -4367,7 +4368,7 @@ function template_add_insurance()
                 </tr>      
             </table>
             </form>
-            <script language="JavaScript" type="text/javascript">
+            <script type="text/javascript">
             var frmvalidator = new Validator("add_insurance");
             
             frmvalidator.addValidation("business_id","req","' . $txt['smfg_val_select_insurance_company'] . '");
@@ -4487,7 +4488,7 @@ function template_edit_insurance()
                 </tr>      
             </table>
             </form>
-            <script language="JavaScript" type="text/javascript">
+            <script type="text/javascript">
             var frmvalidator = new Validator("edit_insurance");
             
             frmvalidator.addValidation("business_id","req","' . $txt['smfg_val_select_insurance_company'] . '");
@@ -4616,7 +4617,7 @@ function template_add_quartermile()
             echo '    
                     <tr>
                         <td width="32%" align="right"><b>' . $txt['smfg_enter_remote_url'] . '</b></td>
-                        <td><input name="url_image" type="text" size="40" maxlength="255" value="http://" /></td>
+                        <td><input name="url_image" type="text" size="40" maxlength="255" value="https://" /></td>
                     </tr>';
         }
         echo '    
@@ -4640,7 +4641,7 @@ function template_add_quartermile()
                     </tr>
                     <tr>
                         <td width="32%" align="right" nowrap="nowrap"><b>' . $txt['smfg_video_url'] . '</b></td>
-                        <td><input type="text"  size="40" maxlength="255" value="http://" name="video_url"/>&nbsp;<span class="smalltext"><a href="' . $scripturl . '?action=garage;sa=supported_video" rel="shadowbox;width=260;height=400" title="' . $txt['smfg_video_instructions'] . '">Supported Sites</a></span></td>
+                        <td><input type="text"  size="40" maxlength="255" value="https://" name="video_url"/>&nbsp;<span class="smalltext"><a href="' . $scripturl . '?action=garage;sa=supported_video" rel="shadowbox;width=260;height=400" title="' . $txt['smfg_video_instructions'] . '">Supported Sites</a></span></td>
                     </tr>';
 
         echo '    
@@ -4656,7 +4657,7 @@ function template_add_quartermile()
                     </tr>
                 </table>
             </form>
-            <script language="JavaScript" type="text/javascript">
+            <script type="text/javascript">
             var frmvalidator = new Validator("add_quartermile");
             var frm = document.forms["add_quartermile"];
             
@@ -4842,7 +4843,7 @@ function template_edit_quartermile()
         </tr>
     </table>
     </form>
-    <script language="JavaScript" type="text/javascript">
+    <script type="text/javascript">
     var frmvalidator = new Validator("edit_quartermile");
     
     frmvalidator.addValidation("rt","regexp=^[.0-9]{1,7}$","' . $txt['smfg_val_rt_restrictions'] . '");
@@ -4909,7 +4910,7 @@ function template_edit_quartermile()
             echo '    
                 <tr>
                     <td width="32%" align="right"><b>' . $txt['smfg_enter_remote_url'] . '</b></td>
-                    <td><input name="url_image" type="text" size="40" maxlength="255" value="http://" /></td>
+                    <td><input name="url_image" type="text" size="40" maxlength="255" value="https://" /></td>
                 </tr>';
         }
 
@@ -4988,7 +4989,7 @@ function template_edit_quartermile()
                 </td>
             </tr>
         </table>  
-        <script language="JavaScript" type="text/javascript">
+        <script type="text/javascript">
          var frmvalidator = new Validator("update_images");
             
          frmvalidator.addValidation("attach_desc","maxlen=150","' . $txt['smfg_val_image_description_length'] . '");
@@ -5041,7 +5042,7 @@ function template_edit_quartermile()
                     </tr>
                     <tr>
                         <td width="32%" align="right" nowrap="nowrap"><b>' . $txt['smfg_video_url'] . '</b></td>
-                        <td><input type="text"  size="40" maxlength="255" value="http://" name="video_url"/>&nbsp;<span class="smalltext"><a href="' . $scripturl . '?action=garage;sa=supported_video" rel="shadowbox;width=260;height=400" title="' . $txt['smfg_video_instructions'] . '">Supported Sites</a></span></td>
+                        <td><input type="text"  size="40" maxlength="255" value="https://" name="video_url"/>&nbsp;<span class="smalltext"><a href="' . $scripturl . '?action=garage;sa=supported_video" rel="shadowbox;width=260;height=400" title="' . $txt['smfg_video_instructions'] . '">Supported Sites</a></span></td>
                     </tr>';
 
         echo '    
@@ -5116,7 +5117,7 @@ function template_edit_quartermile()
                         </td>
                     </tr>
                 </table>  
-        <script language="JavaScript" type="text/javascript">
+        <script type="text/javascript">
          var frmvalidator = new Validator("update_video");
           
          frmvalidator.addValidation("video_desc","maxlen=150","' . $txt['smfg_val_video_description_length'] . '");
@@ -5609,7 +5610,7 @@ function template_add_dynorun()
             echo '    
                     <tr>
                         <td width="32%" align="right"><b>' . $txt['smfg_enter_remote_url'] . '</b></td>
-                        <td><input name="url_image" type="text" size="40" maxlength="255" value="http://" /></td>
+                        <td><input name="url_image" type="text" size="40" maxlength="255" value="https://" /></td>
                     </tr>';
         }
         echo '    
@@ -5633,7 +5634,7 @@ function template_add_dynorun()
                     </tr>
                     <tr>
                         <td width="32%" align="right" nowrap="nowrap"><b>' . $txt['smfg_video_url'] . '</b></td>
-                        <td><input type="text"  size="40" maxlength="255" value="http://" name="video_url"/>&nbsp;<span class="smalltext"><a href="' . $scripturl . '?action=garage;sa=supported_video" rel="shadowbox;width=260;height=400" title="' . $txt['smfg_video_instructions'] . '">Supported Sites</a></span></td>
+                        <td><input type="text"  size="40" maxlength="255" value="https://" name="video_url"/>&nbsp;<span class="smalltext"><a href="' . $scripturl . '?action=garage;sa=supported_video" rel="shadowbox;width=260;height=400" title="' . $txt['smfg_video_instructions'] . '">Supported Sites</a></span></td>
                     </tr>';
 
         echo '    
@@ -5649,7 +5650,7 @@ function template_add_dynorun()
                     </tr>
                 </table>
                 </form>
-                <script language="JavaScript" type="text/javascript">
+                <script type="text/javascript">
                 var frmvalidator = new Validator("add_dynorun");
                 var frm = document.forms["add_dynorun"];
                 
@@ -5881,7 +5882,7 @@ function template_edit_dynorun()
                 </tr>
             </table>
             </form>
-            <script language="JavaScript" type="text/javascript">
+            <script type="text/javascript">
             var frmvalidator = new Validator("edit_dynorun");
             var frm = document.forms["edit_dynorun"];
             
@@ -5955,7 +5956,7 @@ function template_edit_dynorun()
             echo '    
                     <tr>
                         <td width="32%" align="right"><b>' . $txt['smfg_enter_remote_url'] . '</b></td>
-                        <td><input name="url_image" type="text" size="40" maxlength="255" value="http://" /></td>
+                        <td><input name="url_image" type="text" size="40" maxlength="255" value="https://" /></td>
                     </tr>';
         }
 
@@ -6034,7 +6035,7 @@ function template_edit_dynorun()
                         </td>
                     </tr>
                 </table> 
-                <script language="JavaScript" type="text/javascript">
+                <script type="text/javascript">
                  var frmvalidator = new Validator("update_images");
                     
                     frmvalidator.addValidation("attach_desc","maxlen=150","' . $txt['smfg_val_image_description_length'] . '");
@@ -6093,7 +6094,7 @@ function template_edit_dynorun()
                     </tr>
                     <tr>
                         <td width="32%" align="right" nowrap="nowrap"><b>' . $txt['smfg_video_url'] . '</b></td>
-                        <td><input type="text"  size="40" maxlength="255" value="http://" name="video_url"/>&nbsp;<span class="smalltext"><a href="' . $scripturl . '?action=garage;sa=supported_video" rel="shadowbox;width=260;height=400" title="' . $txt['smfg_video_instructions'] . '">Supported Sites</a></span></td>
+                        <td><input type="text"  size="40" maxlength="255" value="https://" name="video_url"/>&nbsp;<span class="smalltext"><a href="' . $scripturl . '?action=garage;sa=supported_video" rel="shadowbox;width=260;height=400" title="' . $txt['smfg_video_instructions'] . '">Supported Sites</a></span></td>
                     </tr>';
 
         echo '    
@@ -6171,7 +6172,7 @@ function template_edit_dynorun()
                 </td>
             </tr>
         </table>
-        <script language="JavaScript" type="text/javascript">
+        <script type="text/javascript">
          var frmvalidator = new Validator("update_video");
           
          frmvalidator.addValidation("video_desc","maxlen=150","' . $txt['smfg_val_video_description_length'] . '");
@@ -6622,7 +6623,7 @@ function template_add_laptime()
             echo '    
                     <tr>
                         <td width="32%" align="right"><b>' . $txt['smfg_enter_remote_url'] . '</b></td>
-                        <td><input name="url_image" type="text" size="40" maxlength="255" value="http://" /></td>
+                        <td><input name="url_image" type="text" size="40" maxlength="255" value="https://" /></td>
                     </tr>';
         }
         echo '    
@@ -6646,7 +6647,7 @@ function template_add_laptime()
                     </tr>
                     <tr>
                         <td width="32%" align="right" nowrap="nowrap"><b>' . $txt['smfg_video_url'] . '</b></td>
-                        <td><input type="text"  size="40" maxlength="255" value="http://" name="video_url"/>&nbsp;<span class="smalltext"><a href="' . $scripturl . '?action=garage;sa=supported_video" rel="shadowbox;width=260;height=400" title="' . $txt['smfg_video_instructions'] . '">Supported Sites</a></span></td>
+                        <td><input type="text"  size="40" maxlength="255" value="https://" name="video_url"/>&nbsp;<span class="smalltext"><a href="' . $scripturl . '?action=garage;sa=supported_video" rel="shadowbox;width=260;height=400" title="' . $txt['smfg_video_instructions'] . '">Supported Sites</a></span></td>
                     </tr>';
 
         echo '    
@@ -6662,7 +6663,7 @@ function template_add_laptime()
                     </tr>
                 </table>
             </form>
-            <script language="JavaScript" type="text/javascript">
+            <script type="text/javascript">
             var frmvalidator = new Validator("add_lap");
             var frm = document.forms["add_lap"];
             
@@ -6865,7 +6866,7 @@ function template_edit_laptime()
                     </tr>
                 </table>
             </form>
-                <script language="JavaScript" type="text/javascript">
+                <script type="text/javascript">
                 var frmvalidator = new Validator("edit_lap");
                 var frm = document.forms["edit_lap"];
                 
@@ -6946,7 +6947,7 @@ function template_edit_laptime()
             echo '    
                     <tr>
                         <td width="32%" align="right"><b>' . $txt['smfg_enter_remote_url'] . '</b></td>
-                        <td><input name="url_image" type="text" size="40" maxlength="255" value="http://" /></td>
+                        <td><input name="url_image" type="text" size="40" maxlength="255" value="https://" /></td>
                     </tr>';
         }
 
@@ -7025,7 +7026,7 @@ function template_edit_laptime()
                         </td>
                     </tr>
                 </table>  
-                <script language="JavaScript" type="text/javascript">
+                <script type="text/javascript">
                  var frmvalidator = new Validator("update_images");
                 
                     frmvalidator.addValidation("attach_desc","maxlen=150","' . $txt['smfg_val_image_description_length'] . '");
@@ -7084,7 +7085,7 @@ function template_edit_laptime()
                         </tr>
                         <tr>
                             <td width="32%" align="right" nowrap="nowrap"><b>' . $txt['smfg_video_url'] . '</b></td>
-                            <td><input type="text"  size="40" maxlength="255" value="http://" name="video_url"/>&nbsp;<span class="smalltext"><a href="' . $scripturl . '?action=garage;sa=supported_video" rel="shadowbox;width=260;height=400" title="' . $txt['smfg_video_instructions'] . '">Supported Sites</a></span></td>
+                            <td><input type="text"  size="40" maxlength="255" value="https://" name="video_url"/>&nbsp;<span class="smalltext"><a href="' . $scripturl . '?action=garage;sa=supported_video" rel="shadowbox;width=260;height=400" title="' . $txt['smfg_video_instructions'] . '">Supported Sites</a></span></td>
                         </tr>';
 
         echo '    
@@ -7162,7 +7163,7 @@ function template_edit_laptime()
                     </td>
                 </tr>
             </table>
-            <script language="JavaScript" type="text/javascript">
+            <script type="text/javascript">
              var frmvalidator = new Validator("update_video");
               
              frmvalidator.addValidation("video_desc","maxlen=150","' . $txt['smfg_val_video_description_length'] . '");
@@ -7729,7 +7730,7 @@ function template_add_service()
                     </tr>
                 </table>
                 </form>
-                <script language="JavaScript" type="text/javascript">
+                <script type="text/javascript">
                 var frmvalidator = new Validator("add_service");
                 var frm = document.forms["add_service"];
                 
@@ -7877,7 +7878,7 @@ function template_edit_service()
                     </tr>
                 </table>
                 </form>
-                <script language="JavaScript" type="text/javascript">
+                <script type="text/javascript">
                 var frmvalidator = new Validator("edit_service");
                 var frm = document.forms["edit_service"];
                 
@@ -7964,7 +7965,7 @@ function template_edit_blog()
                 </tr>
             </table>
             </form>
-            <script language="JavaScript" type="text/javascript">
+            <script type="text/javascript">
             var frmvalidator = new Validator("edit_blog");
                 
             frmvalidator.addValidation("blog_title","req","' . $txt['smfg_val_enter_blog_title'] . '");
@@ -8031,7 +8032,7 @@ function template_edit_garage_comment()
                 </tr>
             </table>
             </form>
-            <script language="JavaScript" type="text/javascript">
+            <script type="text/javascript">
             var frmvalidator = new Validator("edit_comment");
                 
             frmvalidator.addValidation("post","req","' . $txt['smfg_val_enter_comment'] . '");
@@ -8097,7 +8098,7 @@ function template_edit_comment()
                 </tr>
             </table>
             </form>
-            <script language="JavaScript" type="text/javascript">
+            <script type="text/javascript">
             var frmvalidator = new Validator("edit_comment");
                 
             frmvalidator.addValidation("post","req","' . $txt['smfg_val_enter_comment'] . '");

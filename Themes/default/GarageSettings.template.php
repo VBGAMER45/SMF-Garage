@@ -4,9 +4,10 @@
  ***********************************************************************************
  * SMF Garage: Simple Machines Forum Garage (MOD)                                  *
  * =============================================================================== *
- * Software Version:           SMF Garage 2.3                                      *
- * Install for:                2.0.9-2.0.99                                        *
+ * Software Version:           SMF Garage 3.0.0                                    *
+ * Install for:                2.0.9-2.0.99, 2.1.0-2.1.99                         *
  * Original Developer:         RRasco (http://www.smfgarage.com)                   *
+ * Copyright 2026 by:          vbgamer45 (https://www.smfhacks.com)               *
  * Copyright 2015 by:          Bruno Alves (margarett.pt@gmail.com                 *
  * Copyright 2007-2011 by:     SMF Garage (http://www.smfgarage.com)               *
  *                             RRasco (rrasco@smfgarage.com)                       *
@@ -309,7 +310,7 @@ function template_garage_settings()
 
     echo '      
         
-    <script language="JavaScript" type="text/javascript">
+    <script type="text/javascript">
     var frmvalidator = new Validator("garage_settings");
             
     frmvalidator.addValidation("config[year_start]","req","' . $txt['smfg_val_enter_year_range'] . '");
@@ -426,7 +427,7 @@ function template_garage_settings()
         </tr>
         </table>
         </form>
-        <script language="JavaScript" type="text/javascript">
+        <script type="text/javascript">
         var frmvalidator = new Validator("notify_members");                    
         frmvalidator.addValidation("username","req","' . $txt['smfg_val_enter_username_to_notify'] . '");
         </script>';
@@ -717,7 +718,7 @@ function template_index_settings()
     </div>';
 
     echo '
-    <script language="JavaScript" type="text/javascript">
+    <script type="text/javascript">
     var frmvalidator = new Validator("index_settings");
                                 
     frmvalidator.addValidation("config[featured_vehicle_id]","numeric","' . $txt['smfg_val_featured_vehicle_restriction'] . '");
@@ -1171,7 +1172,7 @@ function template_image_settings()
     </div>';
 
     echo '
-    <script language="JavaScript" type="text/javascript">
+    <script type="text/javascript">
     var frmvalidator = new Validator("image_settings");
                                 
     frmvalidator.addValidation("config[remote_timeout]","req","' . $txt['smfg_val_enter_remote_timout'] . '");
@@ -1286,7 +1287,7 @@ function template_video_settings()
     </div>';
 
     echo '
-    <script language="JavaScript" type="text/javascript">
+    <script type="text/javascript">
     var frmvalidator = new Validator("video_settings");
                                 
     frmvalidator.addValidation("config[gallery_limit_video]","req","' . $txt['smfg_val_enter_gallery_limit'] . '");

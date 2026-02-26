@@ -4,9 +4,10 @@
  ***********************************************************************************
  * SMF Garage: Simple Machines Forum Garage (MOD)                                  *
  * =============================================================================== *
- * Software Version:           SMF Garage 2.3                                      *
- * Install for:                2.0.9-2.0.99                                        *
+ * Software Version:           SMF Garage 3.0.0                                    *
+ * Install for:                2.0.9-2.0.99, 2.1.0-2.1.99                         *
  * Original Developer:         RRasco (http://www.smfgarage.com)                   *
+ * Copyright 2026 by:          vbgamer45 (https://www.smfhacks.com)               *
  * Copyright 2015 by:          Bruno Alves (margarett.pt@gmail.com                 *
  * Copyright 2007-2011 by:     SMF Garage (http://www.smfgarage.com)               *
  *                             RRasco (rrasco@smfgarage.com)                       *
@@ -390,7 +391,7 @@ $txt['smfg_address'] = 'Address';
 $txt['smfg_telephone_no'] = 'Telephone No.';
 $txt['smfg_fax'] = 'Fax No.';
 $txt['smfg_website'] = 'Website';
-$txt['smfg_website_submit'] = 'Website (http:// required)';
+$txt['smfg_website_submit'] = 'Website (https:// or http:// required)';
 $txt['smfg_email'] = 'Email';
 $txt['smfg_opening_hours'] = 'Opening Hours';
 $txt['smfg_lowest_premium'] = 'Lowest Premium';
@@ -466,7 +467,7 @@ $txt['smfg_year_range_end_offset'] = 'Year Range End Offset';
 $txt['smfg_vehicle_quota'] = 'Vehicle Quota';
 $txt['smfg_enable_vehicle_approval'] = 'Enable Vehicle Approval';
 $txt['smfg_date_format'] = 'Date Format';
-$txt['smfg_custom'] = 'Custom…';
+$txt['smfg_custom'] = 'Customï¿½';
 $txt['smfg_vehicles_per_page'] = 'Vehicles Per Page';
 $txt['smfg_search_results_per_page'] = 'Search Results Per Page';
 $txt['smfg_insurance_per_page'] = 'Insurance Reviews Per Page';
@@ -914,18 +915,20 @@ $txt['smfg_gnu_license'] = '
 ***********************************************************************************
 * SMF Garage: Simple Machines Forum Garage (MOD)                                  *
 * =============================================================================== *
-* Software Version:           SMF Garage ' . $smfgSettings['version'] . '         *
+* Software Version:           SMF Garage ' . (!empty($smfgSettings['version']) ? $smfgSettings['version'] : '3.0.0') . '         *
 * Install for:                2.0.9-2.0.99                                        *
-* Original Developer:         RRasco (http://www.smfgarage.com)                   *
+* Original Developer:         RRasco (http://www.smfgarage.com)      
+* Copyright 2026 by:          vbgamer45 (https://www.smfhacks.com)    
 * Copyright 2015 by:          Bruno Alves (margarett.pt@gmail.com                 *
 * Copyright 2007-2011 by:     SMF Garage (http://www.smfgarage.com)               *
 *                             RRasco (rrasco@smfgarage.com)                       *
 * phpBB Garage by:            Esmond Poynton (esmond.poynton@gmail.com)           *
 ***********************************************************************************
 * See the "SMF_Garage_License.txt" file for details.                              *
-*              http://www.opensource.org/licenses/BSD-3-Clause                    *
+*              https://www.opensource.org/licenses/BSD-3-Clause                    *
 **********************************************************************************/
 
+Copyright (c) 2026, vbgamer45
 Copyright (c) 2015, Bruno Alves
 Copyright (c) 2011, RRasco
 All rights reserved.
