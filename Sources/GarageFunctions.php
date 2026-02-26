@@ -1308,7 +1308,7 @@ function product_divs()
                     <table border="0" cellpadding="3" cellspacing="1" width="100%" class="bordercolor">';
 
         $request2 = $smcFunc['db_query']('', '
-            SELECT DISTINCT c.id, c.title
+            SELECT DISTINCT c.id, c.title, c.field_order
             FROM {db_prefix}garage_categories AS c, {db_prefix}garage_products AS p
             WHERE p.business_id = {int:business_id}
                 AND p.category_id = c.id

@@ -435,7 +435,7 @@ function template_view_garage()
                         <div class="cat_bar">
                             <h3 class="catbg">';
 
-    echo $txt['pages'] . ': ' . $context['comments']['page_index'];
+    echo (defined('SMF_VERSION') && version_compare(SMF_VERSION, '2.1', '>=') ? '' : $txt['pages'] . ': ') . $context['comments']['page_index'];
 
     echo '        
                             </h3>
@@ -1815,7 +1815,7 @@ function template_view_vehicle()
                     <div class="cat_bar">
                         <h3 class="catbg">';
 
-    echo $txt['pages'] . ': ' . $context['blog']['page_index'];
+    echo (defined('SMF_VERSION') && version_compare(SMF_VERSION, '2.1', '>=') ? '' : $txt['pages'] . ': ') . $context['blog']['page_index'];
 
     echo '        
                         </h3>
@@ -1900,7 +1900,7 @@ function template_view_vehicle()
                     <div class="cat_bar">
                         <h3 class="catbg">';
 
-    echo $txt['pages'] . ': ' . $context['gb']['page_index'];
+    echo (defined('SMF_VERSION') && version_compare(SMF_VERSION, '2.1', '>=') ? '' : $txt['pages'] . ': ') . $context['gb']['page_index'];
 
     echo '        
                         </h3>
@@ -8296,7 +8296,7 @@ function template_search_results()
 
     echo '<span style="float: right;"><b>[&nbsp;' . $context['total'] . '&nbsp;results&nbsp;]&nbsp;</b></span>';
 
-    echo $txt['pages'] . ': ' . $context['page_index'];
+    echo (defined('SMF_VERSION') && version_compare(SMF_VERSION, '2.1', '>=') ? '' : $txt['pages'] . ': ') . $context['page_index'];
 
     echo '        
                             </h3>
@@ -8696,7 +8696,7 @@ function template_insurance()
 
     echo '<span style="float: right;"><b>[&nbsp;' . $context['total'] . '&nbsp;' . $txt['smfg_businesses_lower'] . '&nbsp;]&nbsp;</b></span>';
 
-    echo $txt['pages'] . ': ' . $context['page_index'];
+    echo (defined('SMF_VERSION') && version_compare(SMF_VERSION, '2.1', '>=') ? '' : $txt['pages'] . ': ') . $context['page_index'];
 
     echo '        
                             </h3>
@@ -8946,7 +8946,7 @@ function template_shops()
 
     echo '<span style="float: right;"><b>[&nbsp;' . $context['total'] . '&nbsp;' . $txt['smfg_businesses_lower'] . '&nbsp;]&nbsp;</b></span>';
 
-    echo $txt['pages'] . ': ' . $context['page_index'];
+    echo (defined('SMF_VERSION') && version_compare(SMF_VERSION, '2.1', '>=') ? '' : $txt['pages'] . ': ') . $context['page_index'];
 
     echo '        
                             </h3>
@@ -9224,7 +9224,7 @@ function template_garages()
 
     echo '<span style="float: right;"><b>[&nbsp;' . $context['total'] . '&nbsp;' . $txt['smfg_businesses_lower'] . '&nbsp;]&nbsp;</b></span>';
 
-    echo $txt['pages'] . ': ' . $context['page_index'];
+    echo (defined('SMF_VERSION') && version_compare(SMF_VERSION, '2.1', '>=') ? '' : $txt['pages'] . ': ') . $context['page_index'];
 
     echo '        
                             </h3>
@@ -9723,7 +9723,7 @@ function template_browse_tables()
 
     echo '<span style="float: right;"><b>[&nbsp;' . $context['total'] . '&nbsp;' . $context['browse_type_total'] . '&nbsp;]&nbsp;</b></span>';
 
-    echo $txt['pages'] . ': ' . $context['page_index'];
+    echo (defined('SMF_VERSION') && version_compare(SMF_VERSION, '2.1', '>=') ? '' : $txt['pages'] . ': ') . $context['page_index'];
 
     echo '        
                             </h3>
